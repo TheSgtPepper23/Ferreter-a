@@ -21,6 +21,8 @@ public class Inventario {
   Archivo arxiu = new Archivo();
   static ArrayList<Articulo> articulos = new ArrayList<>();
   static ArrayList<Double> ventas = new ArrayList<>();
+  final float IVA = 1.16;
+  final float GANANCIA = 1.50;
   
   /**
    * Genera un clave de tipo String para un artículo
@@ -187,7 +189,7 @@ public class Inventario {
         unidad = determinaUnidad(articulos.get(i));
         System.out.println("Cuantas 'unidades' desea vender");
         cantidad = leer.leerEntero();
-        total = cantidad * articulos.get(i).getPrecioCompra()*1.50*1.16;
+        total = cantidad * articulos.get(i).getPrecioCompra()*IVA*GANANCIA;
         if(suficiente(articulos.get(i), cantidad)) {
           articulos.get(i).setExistencia(articulos.get(i).getExistencia()-(cantidad*unidad));
           ventas.add(total);
