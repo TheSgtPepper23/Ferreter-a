@@ -21,8 +21,8 @@ public class Inventario {
   Archivo arxiu = new Archivo();
   static ArrayList<Articulo> articulos = new ArrayList<>();
   static ArrayList<Double> ventas = new ArrayList<>();
-  final float IVA = 1.16;
-  final float GANANCIA = 1.50;
+  final double IVA = 1.16;
+  final double GANANCIA = 1.50;
   
   /**
    * Genera un clave de tipo String para un artículo
