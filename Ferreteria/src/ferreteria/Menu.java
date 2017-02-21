@@ -103,6 +103,8 @@ public class Menu {
         file.escribirArchivo();
         file.escribirVentas();
         break;
+      default:
+        System.out.println("Esa no es una opción válida");
     }
   }
 }
