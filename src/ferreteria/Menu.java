@@ -87,14 +87,7 @@ public class Menu {
         inv.mostrarArticulos();
         break;
       case 9:
-        System.out.println("Escriba el nombre del archivo que desea vender");
-        lect.salto();
-        if (inv.realizarVenta(lect.leerString())) {
-          System.out.println("La venta se realizó con exito");
-        }
-        else {
-          System.out.println("Lo sentimos la venta no pudo llevarse a cabo");
-        }
+        inv.realizarVenta();
         break;
       case 10:
         System.out.println("El valor del inventario es de "+ inv.valorInventario());

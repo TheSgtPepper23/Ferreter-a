@@ -16,13 +16,23 @@ import java.util.Comparator;
  */
 public class Inventario {
   
-  Articulo articulo;
-  Teclado leer = new Teclado();
-  Archivo arxiu = new Archivo();
+  private Articulo articulo;
+  private Teclado leer;
+  private Archivo arxiu;
   static ArrayList<Articulo> articulos = new ArrayList<>();
-  static ArrayList<Double> ventas = new ArrayList<>();
-  final double IVA = 1.16;
-  final double GANANCIA = 1.50;
+  static ArrayList<Venta> ventas = new ArrayList<>();
+  private final double IVA;
+  private final double GANANCIA;
+
+  /**
+   * Constructor principal de la clase Inventario, inicializa instancias y variables de clase
+   */
+  public Inventario() {
+    this.IVA = 1.16;
+    this.GANANCIA = 1.50;
+    leer = new Teclado();
+    arxiu = new Archivo();
+  }
   
   /**
    * Genera un clave de tipo String para un artículo
@@ -52,7 +62,7 @@ public class Inventario {
     articulo.setTipoUnidad(leer.leerString().toUpperCase());
     arxiu.escribirClaves(articulo.getClave());
     articulos.add(articulo);
-    
+    arxiu.escribirArchivo();
   }
   
   /**
@@ -142,6 +152,7 @@ public class Inventario {
             break;
         }
         flag = true;
+        arxiu.escribirArchivo();
         break;
       }
     }
@@ -177,30 +188,63 @@ public class Inventario {
   
   /**
    * Realiza una venta de productos en el inventario
-   * @param vender El nombre del artículo que se dea vender
-   * @return true si la venta se realizo con éxito y false si no se pudo llevar a cabo la transacción
    */
-  public boolean realizarVenta (String vender) {
-    vender = vender.toUpperCase();
-    int unidad, cantidad;
-    double total;
-    for(int i = 0; i < articulos.size(); i++) {
-      if(articulos.get(i).getNombre().equals(vender) || articulos.get(i).getClave().equals(vender)) {
-        unidad = determinaUnidad(articulos.get(i));
-        System.out.println("Cuantas 'unidades' desea vender");
-        cantidad = leer.leerEntero();
-        total = cantidad * articulos.get(i).getPrecioCompra()*IVA*GANANCIA;
-        if(suficiente(articulos.get(i), cantidad)) {
-          articulos.get(i).setExistencia(articulos.get(i).getExistencia()-(cantidad*unidad));
-          ventas.add(total);
-          return true;
-        }
-        else {
-          return false;
-        }
+  public void realizarVenta () {
+    Venta venta;
+    String [][] carrito = new String [50][4];
+    int opcion, cantidad, unidad, cont, i;
+    String nombre;
+    double total, subtotal;
+    
+    do {
+      cont = 0;
+      System.out.println("Ingrese el nombre o la clave del producto que desea");
+      nombre = leer.leerString().toUpperCase();
+      for(i = 0; i < articulos.size(); i++) {
+        if(articulos.get(i).getNombre().equals(nombre) || articulos.get(i).getClave().equals(nombre))
+          break;
       }
+      unidad = determinaUnidad(articulos.get(i));
+      System.out.println("¿Cuántos unidades del artículo desea comprar?");
+      cantidad = leer.leerEntero();
+      subtotal = cantidad * articulos.get(i).getPrecioCompra()*GANANCIA;
+      total = subtotal*IVA;
+      if(suficiente(articulos.get(i), cantidad)) {
+        articulos.get(i).setExistencia(articulos.get(i).getExistencia()-(cantidad*unidad));
+        carrito[cont][0] = articulos.get(i).getNombre();
+        carrito[cont][1] = String.valueOf(cantidad);
+        carrito[cont][2] = String.valueOf(subtotal);
+        carrito[cont][3] = String.valueOf(total);
+        cont ++;
+      }
+      else {
+        System.out.println("Lo sentimos la vena no pudo llevarse a cabo");
+      }
+      System.out.println("¿Desea comprar otro artículo?\nTeclee '1' para aceptar y cualquier otro"
+          + "número para salir");
+      opcion = leer.leerEntero();
+      leer.salto();
+    }while(opcion == 1);
+    venta = new Venta(carrito, cont);
+    ventas.add(venta);
+  }
+  
+  /**
+   * Muestra las ventas que se han realizado y la suma total de las mismas
+   */
+  public void mostrarVentas () {
+    System.out.println(ventas.size());
+    System.out.println(ventas.get(0).getTamanio());
+    for(int i = 0; i < ventas.size(); i++) {
+      for(int j = 0; i < ventas.get(i).getTamanio(); j++) {
+        System.out.println("Fecha: "+ventas.get(i).getFecha());
+        System.out.println("Nombre: "+ventas.get(i).getCarrito(j, 0));
+        System.out.println("Cantidad: "+ventas.get(i).getCarrito(j, 1));
+        System.out.println("Subtotal: "+ventas.get(i).getCarrito(j, 2));
+        System.out.println("Total: "+ventas.get(i).getCarrito(j, 3));
+      }
+        System.out.println("____________________________");
     }
-      return false;
   }
   
    /**
@@ -228,18 +272,6 @@ public class Inventario {
    */
   public boolean suficiente (Articulo elemento, int venta) {
     return elemento.getExistencia()>=venta;
-  }
-  
-  /**
-   * Muestra las ventas que se han realizado y la suma total de las mismas
-   */
-  public void mostrarVentas () {
-    double suma = 0;
-    for(int i = 0; i < ventas.size(); i++) {
-      System.out.println("$ "+ventas.get(i));
-      suma += ventas.get(i);
-    }
-    System.out.println("El total es: "+suma);
   }
   
   /**
