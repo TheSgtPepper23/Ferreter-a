@@ -143,6 +143,7 @@ public class Inventario {
             leer.salto();
             articulos.get(i).setNombre(leer.leerString().toUpperCase());
             System.out.println("Los cambios se han realizado y se guardaran al salir");
+            arxiu.escribirArchivo();
             break;
           case 2:
             System.out.println("Ingrese la nueva descripción para el artículo");
@@ -152,7 +153,6 @@ public class Inventario {
             break;
         }
         flag = true;
-        arxiu.escribirArchivo();
         break;
       }
     }
@@ -233,8 +233,6 @@ public class Inventario {
    * Muestra las ventas que se han realizado y la suma total de las mismas
    */
   public void mostrarVentas () {
-    System.out.println(ventas.size());
-    System.out.println(ventas.get(0).getTamanio());
     for(int i = 0; i < ventas.size(); i++) {
       for(int j = 0; i < ventas.get(i).getTamanio(); j++) {
         System.out.println("Fecha: "+ventas.get(i).getFecha());
