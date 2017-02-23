@@ -26,7 +26,7 @@ public class Ferreteria {
       menu.mostarOpciones();
       opcion = menu.leerOpcion();
       menu.realizarOpcion(opcion);
-      }while (opcion != 11);
+      }while (opcion != 12);
   }
   
 }

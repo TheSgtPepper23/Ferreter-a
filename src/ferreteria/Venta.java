@@ -11,18 +11,24 @@ import java.util.Date;
  *
  * @author José Andrés Domínguez González
  */
-public class Venta {
+public class Venta implements java.io.Serializable {
   private Date fecha;
   private String carrito;
+  private double gTotal;
   
   /**
-   * Constructor por de la clase Venta
-   * @param carrito Matriz de String que contiene el nombre del producto, la cantidad, el subtotal 
-   * y total
-   * @param tamaño Cantidad de artículos distintos que se incluyen en la venta 
+   * Constructor por de la clase Venta 
    */
   public Venta () {
     this.fecha = new Date();
+  }
+  
+  public double getGTotal () {
+    return gTotal;
+  }
+  
+  public void setGTotal (double Gtotal) {
+    this.gTotal = gTotal;
   }
   
   public Date getFecha () {

@@ -197,7 +197,7 @@ public class Inventario {
     String carrito = "";
     int opcion = 0, cantidad, unidad, i;
     String nombre;
-    double total, subtotal;
+    double total, subtotal, gTotal = 0;
     
     do {
       System.out.println("Ingrese el nombre o la clave del producto que desea");
@@ -214,18 +214,23 @@ public class Inventario {
             articulos.get(i).setExistencia(articulos.get(i).getExistencia()-(cantidad*unidad));
             carrito += "\nNombre: "+articulos.get(i).getNombre()+"\nCantidad: "+cantidad+"\nSubtotal: "+subtotal
               +"\nTotal: "+ total+"\n\n";
+            gTotal += total;
           }
           else {
             System.out.println("Lo sentimos la vena no pudo llevarse a cabo");
           }
+        }
+        else {
+          System.out.println("Lo sentimos la vena no pudo llevarse a cabo");
+        }
         System.out.println("¿Desea comprar otro artículo?\nTeclee '1' para aceptar y cualquier otro"
           + "número para salir");
         opcion = leer.leerEntero();
         leer.salto();
-        }
       }
     }while(opcion == 1);
     nuevaVenta.setCarrito(carrito);
+    nuevaVenta.setGTotal(gTotal);
     ventas.add(nuevaVenta);
   }
   
@@ -235,9 +240,10 @@ public class Inventario {
   public void mostrarVentas () {
     for(int i = 0; i < ventas.size(); i++) {
       System.out.println(simplificaFecha(ventas.get(i).getFecha()));
-      System.out.println("_________________________________");
+      System.out.println("---------------------------------");
       System.out.println(ventas.get(i).getCarrito());
-      System.out.println("_________________________________");
+      System.out.println("Gran total: "+ventas.get(i).getGTotal());
+      System.out.println("*********************************");
     }
   }
   
@@ -288,6 +294,18 @@ public class Inventario {
       suma += articulos.get(i).getPrecioCompra()*(articulos.get(i).getExistencia()/determinaUnidad(articulos.get(i)));
     }
     return suma;
+  }
+  
+  public void filtrarVentas (String fecha) {
+    for(int i = 0; i < ventas.size(); i++) {
+      if(ventas.get(i).getFecha().equals(fecha)) {
+        System.out.println(simplificaFecha(ventas.get(i).getFecha()));
+        System.out.println("---------------------------------");
+        System.out.println(ventas.get(i).getCarrito());
+        System.out.println("Gran total: "+ventas.get(i).getGTotal());
+        System.out.println("*********************************");
+      }
+    }
   }
 }
 
