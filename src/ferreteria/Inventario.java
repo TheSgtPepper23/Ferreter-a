@@ -6,9 +6,11 @@
 package ferreteria;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 
 /**
  * Contiene los metodos para manipular los elementos del inventario
@@ -235,7 +237,7 @@ public class Inventario {
   public void mostrarVentas () {
     for(int i = 0; i < ventas.size(); i++) {
       for(int j = 0; i < ventas.get(i).getTamanio(); j++) {
-        System.out.println("Fecha: "+ventas.get(i).getFecha());
+        System.out.println("Fecha: "+simplificaFecha(ventas.get(i).getFecha()));
         System.out.println("Nombre: "+ventas.get(i).getCarrito(j, 0));
         System.out.println("Cantidad: "+ventas.get(i).getCarrito(j, 1));
         System.out.println("Subtotal: "+ventas.get(i).getCarrito(j, 2));
@@ -243,6 +245,11 @@ public class Inventario {
       }
         System.out.println("____________________________");
     }
+  }
+  
+  public String simplificaFecha (Date fecha) {
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyy");
+    return formato.format(fecha);
   }
   
    /**

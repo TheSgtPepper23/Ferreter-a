@@ -16,6 +16,12 @@ public class Venta {
   private final String[][] carrito;
   private int tamanio;
   
+  /**
+   * Constructor por de la clase Venta
+   * @param carrito Matriz de String que contiene el nombre del producto, la cantidad, el subtotal 
+   * y total
+   * @param tamaño Cantidad de artículos distintos que se incluyen en la venta 
+   */
   public Venta (String carrito [][], int tamaño) {
     this.fecha = new Date();
     this.tamanio = tamaño;
