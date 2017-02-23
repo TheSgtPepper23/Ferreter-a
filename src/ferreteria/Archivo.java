@@ -30,12 +30,12 @@ import java.util.logging.Logger;
 public class Archivo {
   File arkiv;
   File claves;
-  File archivieren;
+  File archivo;
   
   public Archivo (){
     arkiv = new File("inventario.dat");
     claves = new File("claves.txt");
-    archivieren = new File("ventas.dat");
+    archivo = new File("ventas.dat");
   }
   
   /**
@@ -123,15 +123,18 @@ public class Archivo {
       }
   }
   
+  /**
+   * Lee el archivo ventas.dat para inicializar el arraylist Inventario.ventas, si no existe lo creará
+   */
   public void leerVentas () {
     try {
-      if(archivieren.exists()) {
-        FileInputStream fis = new FileInputStream(archivieren);
+      if(archivo.exists()) {
+        FileInputStream fis = new FileInputStream(archivo);
         ObjectInputStream ois = new ObjectInputStream(fis);
         Inventario.ventas = (ArrayList) ois.readObject();
       }
       else {
-        arkiv.createNewFile();
+        archivo.createNewFile();
       }
       
     } catch (FileNotFoundException ex) {
@@ -141,9 +144,12 @@ public class Archivo {
     }
   }
   
+  /**
+   * Serializa el arraylist Inventario.ventas para que los datos puedan ser guardaos
+   */
   public void escribirVentas () {
     try {
-      FileOutputStream fos = new FileOutputStream(archivieren);
+      FileOutputStream fos = new FileOutputStream(archivo);
       ObjectOutputStream oos = new ObjectOutputStream(fos);
       oos.writeObject(Inventario.ventas);
       fos.close();

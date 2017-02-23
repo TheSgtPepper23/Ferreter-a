@@ -13,8 +13,7 @@ import java.util.Date;
  */
 public class Venta {
   private Date fecha;
-  private final String[][] carrito;
-  private int tamanio;
+  private String carrito;
   
   /**
    * Constructor por de la clase Venta
@@ -22,21 +21,19 @@ public class Venta {
    * y total
    * @param tamaño Cantidad de artículos distintos que se incluyen en la venta 
    */
-  public Venta (String carrito [][], int tamaño) {
+  public Venta () {
     this.fecha = new Date();
-    this.tamanio = tamaño;
-    this.carrito = carrito;
   }
   
   public Date getFecha () {
     return fecha;
   }
   
-  public String getCarrito (int fila, int columna) {
-    return carrito[fila][columna];
+  public String getCarrito () {
+    return carrito;
   }
   
-  public int getTamanio () {
-    return tamanio;
+  public void setCarrito (String carrito) {
+    this.carrito = carrito;
   }
 }

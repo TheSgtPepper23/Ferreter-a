@@ -19,6 +19,7 @@ import java.util.Date;
 public class Inventario {
   
   private Articulo articulo;
+  private Venta nuevaVenta;
   private Teclado leer;
   private Archivo arxiu;
   static ArrayList<Articulo> articulos = new ArrayList<>();
@@ -192,43 +193,40 @@ public class Inventario {
    * Realiza una venta de productos en el inventario
    */
   public void realizarVenta () {
-    Venta venta;
-    String [][] carrito = new String [50][4];
-    int opcion, cantidad, unidad, cont, i;
+    nuevaVenta = new Venta();
+    String carrito = "";
+    int opcion = 0, cantidad, unidad, i;
     String nombre;
     double total, subtotal;
     
     do {
-      cont = 0;
       System.out.println("Ingrese el nombre o la clave del producto que desea");
       nombre = leer.leerString().toUpperCase();
       for(i = 0; i < articulos.size(); i++) {
-        if(articulos.get(i).getNombre().equals(nombre) || articulos.get(i).getClave().equals(nombre))
-          break;
-      }
-      unidad = determinaUnidad(articulos.get(i));
-      System.out.println("¿Cuántos unidades del artículo desea comprar?");
-      cantidad = leer.leerEntero();
-      subtotal = cantidad * articulos.get(i).getPrecioCompra()*GANANCIA;
-      total = subtotal*IVA;
-      if(suficiente(articulos.get(i), cantidad)) {
-        articulos.get(i).setExistencia(articulos.get(i).getExistencia()-(cantidad*unidad));
-        carrito[cont][0] = articulos.get(i).getNombre();
-        carrito[cont][1] = String.valueOf(cantidad);
-        carrito[cont][2] = String.valueOf(subtotal);
-        carrito[cont][3] = String.valueOf(total);
-        cont ++;
-      }
-      else {
-        System.out.println("Lo sentimos la vena no pudo llevarse a cabo");
-      }
-      System.out.println("¿Desea comprar otro artículo?\nTeclee '1' para aceptar y cualquier otro"
+        if(articulos.get(i).getNombre().equals(nombre) || articulos.get(i).getClave().equals(nombre)) {
+          unidad = determinaUnidad(articulos.get(i));
+          System.out.println("¿Cuántos unidades del artículo desea comprar?");
+          cantidad = leer.leerEntero();
+          leer.salto();
+          subtotal = cantidad * articulos.get(i).getPrecioCompra()*GANANCIA;
+          total = subtotal*IVA;
+          if(suficiente(articulos.get(i), cantidad)) {
+            articulos.get(i).setExistencia(articulos.get(i).getExistencia()-(cantidad*unidad));
+            carrito += "\nNombre: "+articulos.get(i).getNombre()+"\nCantidad: "+cantidad+"\nSubtotal: "+subtotal
+              +"\nTotal: "+ total+"\n\n";
+          }
+          else {
+            System.out.println("Lo sentimos la vena no pudo llevarse a cabo");
+          }
+        System.out.println("¿Desea comprar otro artículo?\nTeclee '1' para aceptar y cualquier otro"
           + "número para salir");
-      opcion = leer.leerEntero();
-      leer.salto();
+        opcion = leer.leerEntero();
+        leer.salto();
+        }
+      }
     }while(opcion == 1);
-    venta = new Venta(carrito, cont);
-    ventas.add(venta);
+    nuevaVenta.setCarrito(carrito);
+    ventas.add(nuevaVenta);
   }
   
   /**
@@ -236,17 +234,18 @@ public class Inventario {
    */
   public void mostrarVentas () {
     for(int i = 0; i < ventas.size(); i++) {
-      for(int j = 0; i < ventas.get(i).getTamanio(); j++) {
-        System.out.println("Fecha: "+simplificaFecha(ventas.get(i).getFecha()));
-        System.out.println("Nombre: "+ventas.get(i).getCarrito(j, 0));
-        System.out.println("Cantidad: "+ventas.get(i).getCarrito(j, 1));
-        System.out.println("Subtotal: "+ventas.get(i).getCarrito(j, 2));
-        System.out.println("Total: "+ventas.get(i).getCarrito(j, 3));
-      }
-        System.out.println("____________________________");
+      System.out.println(simplificaFecha(ventas.get(i).getFecha()));
+      System.out.println("_________________________________");
+      System.out.println(ventas.get(i).getCarrito());
+      System.out.println("_________________________________");
     }
   }
   
+  /**
+   * Transforma la fecha a un formato simple
+   * @param fecha Objeto del tipo Date
+   * @return String con la fecha en el format D/M/A
+   */
   public String simplificaFecha (Date fecha) {
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyy");
     return formato.format(fecha);
