@@ -27,7 +27,7 @@ public class Menu {
     System.out.println("Bienvenido\n¿Qué acción desea realizar?\n\n1) Agregar artículo\n"
         + "2) Mostrar inventario\n3) Editar artículo\n4) Eliminar artículo\n5) Mostrar ventas"
         + "\n6) Buscar\n7) Ordenar por clave\n8) Ordenar por nombre\n9) Realizar venta\n"
-        + "10) Valor del inventario\n11) Filtrar ventas\n12) Salir");
+        + "10) Valor del inventario\n11) Filtrar ventas\n12) Filtrar por mes\n13) Salir");
   }
   
   /**
@@ -93,10 +93,16 @@ public class Menu {
         System.out.println("El valor del inventario es de "+ inv.valorInventario());
         break;
       case 11:
+        lect.salto();
         System.out.println("Escriba la fecha en el formato dd/mm/aa utilizando solo números");
-        inv.filtrarVentas(lect.leerString());
+        inv.ventasFechaExacta(lect.leerString());
         break;
       case 12:
+        lect.salto();
+        System.out.println("Escriba el número del mes que desea buscar, utilice dos números");
+        inv.ventasMes(lect.leerString());
+        break;
+      case 13:
         file.escribirArchivo();
         file.escribirVentas();
         break;

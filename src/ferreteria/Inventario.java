@@ -296,9 +296,33 @@ public class Inventario {
     return suma;
   }
   
-  public void filtrarVentas (String fecha) {
+  /**
+   * Devuelve las ventas que se realizaron en una fecha exacta
+   * @param fecha String con el formato dd/MM/yyy de la fecha que se desea buscar
+   */
+  public void ventasFechaExacta (String fecha) {
     for(int i = 0; i < ventas.size(); i++) {
-      if(ventas.get(i).getFecha().equals(fecha)) {
+      if (simplificaFecha(ventas.get(i).getFecha()).equals(fecha)) {
+        System.out.println(simplificaFecha(ventas.get(i).getFecha()));
+        System.out.println("---------------------------------");
+        System.out.println(ventas.get(i).getCarrito());
+        System.out.println("Gran total: "+ventas.get(i).getGTotal());
+        System.out.println("*********************************");
+      }
+      else {
+        System.out.println("No hubo ventas en esa fecha");
+      }
+    }
+  }
+  
+  /**
+   * Permite filtrar las ventas por mes 
+   * @param fecha el número del mes que se desea filtrar 
+   */
+  public void ventasMes (String fecha) {
+    fecha = "/"+fecha+"/";
+    for (int i = 0; i < ventas.size(); i++) {
+      if(simplificaFecha(ventas.get(i).getFecha()).contains(fecha)) {
         System.out.println(simplificaFecha(ventas.get(i).getFecha()));
         System.out.println("---------------------------------");
         System.out.println(ventas.get(i).getCarrito());
