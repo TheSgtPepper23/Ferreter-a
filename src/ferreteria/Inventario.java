@@ -212,8 +212,8 @@ public class Inventario {
           total = subtotal*IVA;
           if(suficiente(articulos.get(i), cantidad)) {
             articulos.get(i).setExistencia(articulos.get(i).getExistencia()-(cantidad*unidad));
-            carrito += "\nNombre: "+articulos.get(i).getNombre()+"\nCantidad: "+cantidad+"\nSubtotal: "+subtotal
-              +"\nTotal: "+ total+"\n\n";
+            carrito += "\nNombre: "+articulos.get(i).getNombre()+"\nCantidad: "+cantidad+
+                "\nSubtotal: "+subtotal+"\nTotal: "+ total+"\n\n";
             gTotal += total;
           }
           else {
@@ -291,7 +291,8 @@ public class Inventario {
   public double valorInventario () {
     double suma = 0;
     for(int i =0; i < articulos.size(); i++) {
-      suma += articulos.get(i).getPrecioCompra()*(articulos.get(i).getExistencia()/determinaUnidad(articulos.get(i)));
+      suma += articulos.get(i).getPrecioCompra()*(articulos.get(i).getExistencia()/
+          determinaUnidad(articulos.get(i)));
     }
     return suma;
   }
