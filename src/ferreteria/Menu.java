@@ -5,6 +5,7 @@
  */
 package ferreteria;
 
+import Conexion.Archivo;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

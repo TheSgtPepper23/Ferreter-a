@@ -5,6 +5,7 @@
  */
 package ferreteria;
 
+import Conexion.Archivo;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ public class Inventario {
   private Venta nuevaVenta;
   private Teclado leer;
   private Archivo arxiu;
-  static ArrayList<Articulo> articulos = new ArrayList<>();
-  static ArrayList<Venta> ventas = new ArrayList<>();
+  public static ArrayList<Articulo> articulos = new ArrayList<>();
+  public static ArrayList<Venta> ventas = new ArrayList<>();
   private final double IVA;
   private final double GANANCIA;
 

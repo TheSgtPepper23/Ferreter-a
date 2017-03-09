@@ -5,6 +5,8 @@
  */
 package ferreteria;
 
+import Conexion.Archivo;
+
 /**
  *
  * @author José Andrés Domínguez González
