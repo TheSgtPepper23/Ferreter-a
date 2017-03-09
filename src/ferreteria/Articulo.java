@@ -10,7 +10,6 @@ package ferreteria;
  * @author José Andrés Domínguez González
  * @version 2.0
  * Setters y getters de para la creación y modificación de "artículos" serializables
- * 
  */
 public class Articulo implements java.io.Serializable {
   private String clave;
