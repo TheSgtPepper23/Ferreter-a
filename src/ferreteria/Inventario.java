@@ -5,7 +5,7 @@
  */
 package ferreteria;
 
-import Conexion.Archivo;
+import Informacion.Archivo;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;

@@ -5,7 +5,7 @@
  */
 package ferreteria;
 
-import Conexion.Archivo;
+import Informacion.Archivo;
 
 /**
  *
