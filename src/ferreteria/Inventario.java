@@ -5,7 +5,7 @@
  */
 package ferreteria;
 
-import informacion.Archivo;
+import accesoDatos.Archivo;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class Inventario {
   private Articulo articulo;
   private Venta nuevaVenta;
   private Teclado leer;
-  private Archivo arxiu;
+  Archivo arxiu;
   static ArrayList<Articulo> articulos = new ArrayList<>();
   static ArrayList<Venta> ventas = new ArrayList<>();
   private final double IVA;
@@ -66,7 +66,7 @@ public class Inventario {
     articulo.setTipoUnidad(leer.leerString().toUpperCase());
     arxiu.escribirClaves(articulo.getClave());
     articulos.add(articulo);
-    arxiu.escribirArchivo(articulos);
+    arxiu.escribirArchivo(articulos, arxiu.getArchInventario());
   }
   
   /**
@@ -147,7 +147,7 @@ public class Inventario {
             leer.salto();
             articulos.get(i).setNombre(leer.leerString().toUpperCase());
             System.out.println("Los cambios se han realizado y se guardaran al salir");
-            arxiu.escribirArchivo(articulos);
+            arxiu.escribirArchivo(articulos, arxiu.getArchInventario());
             break;
           case 2:
             System.out.println("Ingrese la nueva descripción para el artículo");

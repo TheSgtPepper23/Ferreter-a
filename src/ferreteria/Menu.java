@@ -5,7 +5,7 @@
  */
 package ferreteria;
 
-import informacion.Archivo;
+import accesoDatos.Archivo;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,9 +16,9 @@ import java.util.logging.Logger;
  */
 public class Menu {
   
-  Inventario inv = new Inventario();
-  Archivo file = new Archivo();
-  Teclado lect = new Teclado();
+  private Inventario inv = new Inventario();
+  private Archivo file = new Archivo();
+  private Teclado lect = new Teclado();
   
   /**
    * Muestra el menú con las opciones disponibles
@@ -104,8 +104,8 @@ public class Menu {
         inv.ventasMes(lect.leerString());
         break;
       case 13:
-        file.escribirArchivo(Inventario.articulos);
-        file.escribirVentas(Inventario.ventas);
+        file.escribirArchivo(Inventario.articulos, file.getArchInventario());
+        file.escribirArchivo(Inventario.ventas, file.getArchVentas());
         break;
       default:
         System.out.println("Esa no es una opción válida");

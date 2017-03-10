@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package informacion;
+package accesoDatos;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,39 +24,55 @@ import java.util.logging.Logger;
 /**
  *
  * @author José Andrés Domínguez González
- * @version 1.0
+ * @version 2.0
  * Entraday salida de los archivos inventario.dat y claves.txt
  */
 public class Archivo {
-  File arkiv;
-  File claves;
-  File archivo;
-  File file;
+  private final File archInventario;
+  private final File archClaves;
+  private final File archVentas;
+  private final File archUsuarios;
   
   public Archivo (){
-    arkiv = new File("inventario.dat");
-    claves = new File("claves.txt");
-    archivo = new File("ventas.dat");
-    file = new File("usuarios.txt");
+    this.archInventario = new File("inventario.dat");
+    this.archClaves = new File("claves.txt");
+    this.archVentas = new File("ventas.dat");
+    this.archUsuarios = new File("usuarios.txt");
+  }
+  
+  public File getArchInventario () {
+    return archInventario;
+  }
+  
+  public File getArchVentas () {
+    return archVentas;
+  }
+  
+  public File getArchClaves () {
+    return archClaves;
+  }
+  
+  public File getArchUsuarios () {
+    return archUsuarios;
   }
   
   /**
    * Lee los datos del arcivo .dat donde se almacenan los artículos del inventario
    * @return Objetos leidos del archivo inventario.dat
+   * 
    */
-  public Object leerArchivo() {
+  public Object leerArchivo(File archivo) {
    
     FileInputStream fis;
     ObjectInputStream ois;
     try {
-      if(arkiv.exists()) {
-        fis = new FileInputStream(arkiv);
+      if(archivo.exists()) {
+        fis = new FileInputStream(archivo);
         ois = new ObjectInputStream(fis);
-//        Inventario.articulos = (ArrayList) ois.readObject();
         return ois.readObject();
       }
       else {
-        arkiv.createNewFile();
+        archivo.createNewFile();
       }
       
     } catch (FileNotFoundException ex) {
@@ -70,9 +86,9 @@ public class Archivo {
    * Escribe los datos del arraylist en el archivo .dat
    * @param arreglo Arraylist de objetos tipo Articulo
    */
-  public void escribirArchivo (ArrayList arreglo) {
+  public void escribirArchivo (ArrayList arreglo, File archivo) {
     try {
-      FileOutputStream fos = new FileOutputStream(arkiv);
+      FileOutputStream fos = new FileOutputStream(archivo);
       ObjectOutputStream oos = new ObjectOutputStream(fos);
       oos.writeObject(arreglo);
       fos.close();
@@ -90,9 +106,9 @@ public class Archivo {
    */
   public int leerClaves () {
     int cont = 0;
-    if(claves.exists()) {
+    if(archClaves.exists()) {
       try {
-        BufferedReader br = new BufferedReader(new FileReader(claves));
+        BufferedReader br = new BufferedReader(new FileReader(archClaves));
         
         while(br.readLine() != null) {
           cont ++;
@@ -107,7 +123,7 @@ public class Archivo {
     }
     else {
       try {
-        claves.createNewFile();
+        archClaves.createNewFile();
       } catch (IOException ex) {
         Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
       }
@@ -121,7 +137,7 @@ public class Archivo {
    */
   public void escribirClaves (String clave) {
     try {
-      FileWriter fw = new FileWriter(claves, true);
+      FileWriter fw = new FileWriter(archClaves, true);
       BufferedWriter bw = new BufferedWriter (fw);
       PrintWriter pw = new PrintWriter (bw);
       pw.write(clave+"\r\n");
@@ -130,48 +146,5 @@ public class Archivo {
     } 
     catch (IOException e) {
     }
-  }
-  
-  /**
-   * Lee el archivo ventas.dat para inicializar el arraylist Inventario.ventas, si no existe lo creará
-   */
-  public Object leerVentas () {
-    try {
-      if(archivo.exists()) {
-        FileInputStream fis = new FileInputStream(archivo);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        //Inventario.ventas = (ArrayList) ois.readObject();
-        return ois.readObject();
-      }
-      else {
-        archivo.createNewFile();
-      }
-      
-    } catch (FileNotFoundException ex) {
-      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IOException | ClassNotFoundException ex) {
-      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
-    }
-    return null;
-  }
-  
-  /**
-   * Serializa el arraylist Inventario.ventas para que los datos puedan ser guardaos
-   * @param arreglo ArrayList con objetos del tipo Venta
-   */
-  public void escribirVentas (ArrayList arreglo) {
-    try {
-      FileOutputStream fos = new FileOutputStream(archivo);
-      ObjectOutputStream oos = new ObjectOutputStream(fos);
-      oos.writeObject(arreglo);
-      fos.close();
-      oos.close();
-    } catch (FileNotFoundException ex) {
-      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IOException ex) {
-      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
-    }
-  }
-  
-  
+  }  
 }

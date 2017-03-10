@@ -5,7 +5,7 @@
  */
 package ferreteria;
 
-import informacion.Archivo;
+import accesoDatos.Archivo;
 import java.util.ArrayList;
 
 /**
@@ -22,8 +22,8 @@ public class Ferreteria {
     // TODO code application logic here
     Menu menu = new Menu();
     Archivo archivo = new Archivo();
-    Inventario.articulos = (ArrayList<Articulo>) archivo.leerArchivo();
-    Inventario.ventas = (ArrayList<Venta>) archivo.leerVentas();
+    Inventario.articulos = (ArrayList<Articulo>) archivo.leerArchivo(archivo.getArchInventario());
+    Inventario.ventas = (ArrayList<Venta>) archivo.leerArchivo(archivo.getArchVentas());
     int opcion;
     do {
       menu.mostarOpciones();

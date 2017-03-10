@@ -11,10 +11,10 @@ package usuarios;
  */
 public class Usuario {
   private String username;
-  private String contrasenia;
+  private int[] contrasenia;
   private boolean admin;
   
-  public Usuario (String username, String contrasenia, boolean admin) {
+  public Usuario (String username, int[] contrasenia, boolean admin) {
     this.username = username;
     this.contrasenia = contrasenia;
     this.admin = admin;
@@ -30,11 +30,11 @@ public class Usuario {
     return username;
   }
   
-  public void setContrasenia (String contrasenia) {
+  public void setContrasenia (int[] contrasenia) {
     this.contrasenia = contrasenia;
   }
   
-  public String getContrasenia () {
+  public int[] getContrasenia () {
     return contrasenia;
   }
   
@@ -46,12 +46,24 @@ public class Usuario {
     this.admin = admin;    
   }
   
-  public String cifrarContra (String contra) {
-    return contra;
+  public int [] cifrarContra (String contra) {
+    char[] passWd = new char [contra.length()];
+    passWd = contra.toCharArray();
+    int [] passASCII = new int [passWd.length];
+    for (int i = 0; i < passWd.length; i++) {
+      passASCII[i] = (int)passWd[i]; 
+    }    
+    return passASCII;
   }
   
-  public String descifrarContra (String contra) {
-    return contra;
+  public String descifrarContra (int [] contra ) {
+    String passWd = "";
+    char aux;
+    for(int i = 0; i < contra.length; i++) {
+      aux = (char) contra[i];
+      passWd += aux;
+    }
+    return passWd;
   }
   
 }
