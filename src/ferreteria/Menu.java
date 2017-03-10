@@ -5,7 +5,7 @@
  */
 package ferreteria;
 
-import Informacion.Archivo;
+import informacion.Archivo;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

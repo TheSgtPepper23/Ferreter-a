@@ -5,7 +5,7 @@
  */
 package ferreteria;
 
-import Informacion.Archivo;
+import informacion.Archivo;
 import java.util.ArrayList;
 
 /**

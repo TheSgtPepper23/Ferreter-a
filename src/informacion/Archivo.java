@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Informacion;
+package informacion;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -37,7 +37,7 @@ public class Archivo {
     arkiv = new File("inventario.dat");
     claves = new File("claves.txt");
     archivo = new File("ventas.dat");
-    file = new File("uuarios.txt");
+    file = new File("usuarios.txt");
   }
   
   /**
@@ -120,15 +120,16 @@ public class Archivo {
    * @param clave La clave del archivo
    */
   public void escribirClaves (String clave) {
-     try {
+    try {
       FileWriter fw = new FileWriter(claves, true);
       BufferedWriter bw = new BufferedWriter (fw);
       PrintWriter pw = new PrintWriter (bw);
       pw.write(clave+"\r\n");
       pw.close();
       bw.close();
-    } catch (IOException e) {
-      }
+    } 
+    catch (IOException e) {
+    }
   }
   
   /**
@@ -171,4 +172,6 @@ public class Archivo {
       Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
     }
   }
+  
+  
 }
