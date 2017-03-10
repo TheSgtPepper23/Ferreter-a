@@ -23,8 +23,8 @@ public class Inventario {
   private Venta nuevaVenta;
   private Teclado leer;
   private Archivo arxiu;
-  public static ArrayList<Articulo> articulos = new ArrayList<>();
-  public static ArrayList<Venta> ventas = new ArrayList<>();
+  static ArrayList<Articulo> articulos = new ArrayList<>();
+  static ArrayList<Venta> ventas = new ArrayList<>();
   private final double IVA;
   private final double GANANCIA;
 
@@ -66,7 +66,7 @@ public class Inventario {
     articulo.setTipoUnidad(leer.leerString().toUpperCase());
     arxiu.escribirClaves(articulo.getClave());
     articulos.add(articulo);
-    arxiu.escribirArchivo();
+    arxiu.escribirArchivo(articulos);
   }
   
   /**
@@ -147,7 +147,7 @@ public class Inventario {
             leer.salto();
             articulos.get(i).setNombre(leer.leerString().toUpperCase());
             System.out.println("Los cambios se han realizado y se guardaran al salir");
-            arxiu.escribirArchivo();
+            arxiu.escribirArchivo(articulos);
             break;
           case 2:
             System.out.println("Ingrese la nueva descripción para el artículo");
