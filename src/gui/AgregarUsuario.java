@@ -68,7 +68,7 @@ public class AgregarUsuario extends Application {
     regresar.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent t) {
-        Loggin loguear = new Loggin();
+        Login loguear = new Login();
         loguear.start(primaryStage);        
       }
     });

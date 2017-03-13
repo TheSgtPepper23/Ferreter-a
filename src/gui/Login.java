@@ -28,7 +28,7 @@ import usuarioSistema.Usuario;
  * @author andres
  * @version 1.0
  */
-public class Loggin extends Application {
+public class Login extends Application {
     
   private Archivo archivo;
   private Usuario user;
