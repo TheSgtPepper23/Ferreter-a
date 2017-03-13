@@ -11,6 +11,7 @@ import java.util.Scanner;
  * Lee opciones del usuario de los tipos, int, String o double
  * @author andres
  * @version 1.0
+ * @deprecated No se utiliza más por la inclusión de una GUI
  */
 public class Teclado {
   

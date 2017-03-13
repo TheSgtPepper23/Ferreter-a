@@ -12,6 +12,7 @@ import java.util.ArrayList;
  *
  * @author José Andrés Domínguez González
  * @version 1.0
+ * @deprecated No se utiliza más po la implementación de una GUI
  */
 public class Ferreteria {
 
@@ -22,8 +23,8 @@ public class Ferreteria {
     // TODO code application logic here
     Menu menu = new Menu();
     Archivo archivo = new Archivo();
-    Inventario.articulos = (ArrayList<Articulo>) archivo.leerArchivo(archivo.getArchInventario());
-    Inventario.ventas = (ArrayList<Venta>) archivo.leerArchivo(archivo.getArchVentas());
+    Inventario.articulos = (ArrayList) archivo.leerArchivo(archivo.getArchInventario());
+    Venta.ventas = (ArrayList) archivo.leerArchivo(archivo.getArchVentas());
     int opcion;
     do {
       menu.mostarOpciones();

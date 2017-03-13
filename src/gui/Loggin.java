@@ -5,9 +5,10 @@
  */
 package gui;
 
+import accesoDatos.Archivo;
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import usuarioSistema.Usuario;
 
 /**
  *
@@ -28,6 +30,16 @@ import javafx.stage.Stage;
  */
 public class Loggin extends Application {
     
+  private Archivo archivo;
+  private Usuario user;
+  private GridPane grid;
+  private Text titulo;
+  private Label usuario, contra;
+  private TextField usuarioTexto;
+  private PasswordField contraTexto;
+  private Button bIngresar;
+  private HBox cajaBoton;
+  private Hyperlink nuevo;
   /**
     * 
     * @param primaryStage 
@@ -35,15 +47,16 @@ public class Loggin extends Application {
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle("Log In");
-    GridPane grid = new GridPane();
-    Text titulo = new Text("Ingrese su nombre de usuario y contraseña");
-    Label usuario = new Label("Usuario: ");
-    TextField usuarioTexto = new TextField();
-    Label contra = new Label("Contraseña: ");
-    PasswordField contraTexto = new PasswordField();
-    Button bIngresar = new Button("Ingresar");
-    HBox cajaBoton = new HBox(10);
-    Hyperlink nuevo = new Hyperlink("¿Nuevo usuario?");
+    archivo = new Archivo();
+    grid = new GridPane();
+    titulo = new Text("Ingrese su nombre de usuario y contraseña");
+    usuario = new Label("Usuario: ");
+    usuarioTexto = new TextField();
+    contra = new Label("Contraseña: ");
+    contraTexto = new PasswordField();
+    bIngresar = new Button("Ingresar");
+    cajaBoton = new HBox(10);
+    nuevo = new Hyperlink("¿Nuevo usuario?");
         
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(10);
@@ -58,17 +71,38 @@ public class Loggin extends Application {
     cajaBoton.getChildren().add(bIngresar);
     grid.add(cajaBoton, 1, 4);
     grid.add(nuevo, 0, 4);
+    Usuario.usuarios = (ArrayList<Usuario>) archivo.leerArchivo(archivo.getArchUsuarios());
       
-    nuevo.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent t) {
-        AgregarUsuario anadir = new AgregarUsuario();
-        anadir.start(primaryStage);
-      }
+    nuevo.setOnAction((ActionEvent t) -> {
+      AgregarUsuario anadir = new AgregarUsuario();
+      anadir.start(primaryStage);
     });
         
     Scene escena = new Scene(grid, 450, 175);
     primaryStage.setScene(escena);
     primaryStage.show();
+    
+    bIngresar.setOnAction((ActionEvent t) -> {
+      for (int i = 0; i < Usuario.usuarios.size(); i++) {
+        if(Usuario.usuarios.get(i).getUsername().equals(usuarioTexto.getText())) {
+          user = Usuario.usuarios.get(i);
+        }
+      }
+      if(user.getContrasenia().equals(contraTexto.getText())) {
+        MenuPrincipal menu = new MenuPrincipal();
+        menu.start(primaryStage);
+      }
+      else {
+        System.out.println("La contraseña es incorrecta");
+      }
+      
+    });
+  }
+  
+  /**
+   * @param args the command line arguments
+   */
+  public static void main(String[] args) {
+    launch(args);
   }
 }

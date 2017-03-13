@@ -5,6 +5,7 @@
  */
 package gui;
 
+import accesoDatos.Archivo;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,25 +20,36 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import usuarioSistema.Usuario;
 
 /**
  *
  * @author andres
  */
 public class AgregarUsuario extends Application {
-    
+  private Archivo archivo;
+  private Usuario user;
+  private CheckBox admin;
+  private GridPane grid;
+  private Text titulo;
+  private Label lNombreUs, lContraUs;
+  private TextField tNombreUs;
+  private PasswordField pContraUs;
+  private Button agregar, regresar;
+  
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle("Nuevo usuario");
-    GridPane grid = new GridPane();
-    Text titulo = new Text("Ingrese los datos del nuevo usuario");
-    Label lNombreUs = new Label("Nombre: ");
-    Label lContraUs = new Label("Contraseña: ");
-    TextField tNombreUs = new TextField();
-    PasswordField pContraUs = new PasswordField();
-    CheckBox admin = new CheckBox("¿Administrador?");
-    Button agregar = new Button("Agregar");
-    Button regresar = new Button("<-");
+    grid = new GridPane();
+    titulo = new Text("Ingrese los datos del nuevo usuario");
+    lNombreUs = new Label("Nombre: ");
+    lContraUs = new Label("Contraseña: ");
+    tNombreUs = new TextField();
+    pContraUs = new PasswordField();
+    admin = new CheckBox("¿Administrador?");
+    agregar = new Button("Agregar");
+    regresar = new Button("<-");
+    archivo = new Archivo();
     
     grid.setAlignment(Pos.CENTER);
     grid.setHgap(10);
@@ -61,8 +73,21 @@ public class AgregarUsuario extends Application {
       }
     });
     
+    agregar.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent t) {
+        user = new Usuario(tNombreUs.getText(), pContraUs.getText(), administra());
+        Usuario.usuarios.add(user);
+        archivo.escribirArchivo(Usuario.usuarios, archivo.getArchUsuarios());
+      }
+    });
+    
     Scene escena = new Scene(grid, 450, 175);
     primaryStage.setScene(escena);
     primaryStage.show();
+  }
+  
+  public boolean administra () {
+    return admin.isSelected();
   }
 }

@@ -34,10 +34,10 @@ public class Archivo {
   private final File archUsuarios;
   
   public Archivo (){
-    this.archInventario = new File("inventario.dat");
-    this.archClaves = new File("claves.txt");
-    this.archVentas = new File("ventas.dat");
-    this.archUsuarios = new File("usuarios.txt");
+    archInventario = new File("inventario.dat");
+    archClaves = new File("claves.txt");
+    archVentas = new File("ventas.dat");
+    archUsuarios = new File("usuarios.dat");
   }
   
   public File getArchInventario () {
@@ -58,17 +58,19 @@ public class Archivo {
   
   /**
    * Lee los datos del arcivo .dat donde se almacenan los artículos del inventario
+   * @param archivo
    * @return Objetos leidos del archivo inventario.dat
    * 
    */
   public Object leerArchivo(File archivo) {
-   
-    FileInputStream fis;
-    ObjectInputStream ois;
+ 
+    FileInputStream fis = null;
+    ObjectInputStream ois = null;
     try {
       if(archivo.exists()) {
         fis = new FileInputStream(archivo);
         ois = new ObjectInputStream(fis);
+        
         return ois.readObject();
       }
       else {
@@ -82,17 +84,24 @@ public class Archivo {
     }
     return null;
   }
+  
   /**
    * Escribe los datos del arraylist en el archivo .dat
    * @param arreglo Arraylist de objetos tipo Articulo
    */
   public void escribirArchivo (ArrayList arreglo, File archivo) {
     try {
-      FileOutputStream fos = new FileOutputStream(archivo);
-      ObjectOutputStream oos = new ObjectOutputStream(fos);
-      oos.writeObject(arreglo);
-      fos.close();
-      oos.close();
+      if (archivo.exists()) {
+        FileOutputStream fos = new FileOutputStream(archivo);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(arreglo);
+        fos.close();
+        oos.close();
+      }
+      else {
+        archivo.createNewFile();
+      }
+      
     } catch (FileNotFoundException ex) {
       Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
     } catch (IOException ex) {

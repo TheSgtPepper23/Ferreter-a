@@ -22,9 +22,8 @@ public class Inventario {
   private Articulo articulo;
   private Venta nuevaVenta;
   private Teclado leer;
-  Archivo arxiu;
+  private Archivo arxiu;
   static ArrayList<Articulo> articulos = new ArrayList<>();
-  static ArrayList<Venta> ventas = new ArrayList<>();
   private final double IVA;
   private final double GANANCIA;
 
@@ -232,18 +231,18 @@ public class Inventario {
     }while(opcion == 1);
     nuevaVenta.setCarrito(carrito);
     nuevaVenta.setGTotal(gTotal);
-    ventas.add(nuevaVenta);
+    Venta.ventas.add(nuevaVenta);
   }
   
   /**
    * Muestra las ventas que se han realizado y la suma total de las mismas
    */
   public void mostrarVentas () {
-    for(int i = 0; i < ventas.size(); i++) {
-      System.out.println(simplificaFecha(ventas.get(i).getFecha()));
+    for(int i = 0; i < Venta.ventas.size(); i++) {
+      System.out.println(simplificaFecha(Venta.ventas.get(i).getFecha()));
       System.out.println("---------------------------------");
-      System.out.println(ventas.get(i).getCarrito());
-      System.out.println("Gran total: "+ventas.get(i).getGTotal());
+      System.out.println(Venta.ventas.get(i).getCarrito());
+      System.out.println("Gran total: "+Venta.ventas.get(i).getGTotal());
       System.out.println("*********************************");
     }
   }
@@ -303,12 +302,12 @@ public class Inventario {
    * @param fecha String con el formato dd/MM/yyy de la fecha que se desea buscar
    */
   public void ventasFechaExacta (String fecha) {
-    for(int i = 0; i < ventas.size(); i++) {
-      if (simplificaFecha(ventas.get(i).getFecha()).equals(fecha)) {
-        System.out.println(simplificaFecha(ventas.get(i).getFecha()));
+    for(int i = 0; i < Venta.ventas.size(); i++) {
+      if (simplificaFecha(Venta.ventas.get(i).getFecha()).equals(fecha)) {
+        System.out.println(simplificaFecha(Venta.ventas.get(i).getFecha()));
         System.out.println("---------------------------------");
-        System.out.println(ventas.get(i).getCarrito());
-        System.out.println("Gran total: "+ventas.get(i).getGTotal());
+        System.out.println(Venta.ventas.get(i).getCarrito());
+        System.out.println("Gran total: "+Venta.ventas.get(i).getGTotal());
         System.out.println("*********************************");
       }
       else {
@@ -323,12 +322,12 @@ public class Inventario {
    */
   public void ventasMes (String fecha) {
     fecha = "/"+fecha+"/";
-    for (int i = 0; i < ventas.size(); i++) {
-      if(simplificaFecha(ventas.get(i).getFecha()).contains(fecha)) {
-        System.out.println(simplificaFecha(ventas.get(i).getFecha()));
+    for (int i = 0; i < Venta.ventas.size(); i++) {
+      if(simplificaFecha(Venta.ventas.get(i).getFecha()).contains(fecha)) {
+        System.out.println(simplificaFecha(Venta.ventas.get(i).getFecha()));
         System.out.println("---------------------------------");
-        System.out.println(ventas.get(i).getCarrito());
-        System.out.println("Gran total: "+ventas.get(i).getGTotal());
+        System.out.println(Venta.ventas.get(i).getCarrito());
+        System.out.println("Gran total: "+Venta.ventas.get(i).getGTotal());
         System.out.println("*********************************");
       }
     }

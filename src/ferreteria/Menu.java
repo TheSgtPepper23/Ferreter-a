@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 /**
  * Crea un interfaz con el usuario mostrando menús y leyendo opciones
  * @author José Andrés Domínguez González
+ * @version 1.0
+ * @deprecated No se utiliza más por la inclusión de una GUI
  */
 public class Menu {
   
@@ -105,7 +107,7 @@ public class Menu {
         break;
       case 13:
         file.escribirArchivo(Inventario.articulos, file.getArchInventario());
-        file.escribirArchivo(Inventario.ventas, file.getArchVentas());
+        file.escribirArchivo(Venta.ventas, file.getArchVentas());
         break;
       default:
         System.out.println("Esa no es una opción válida");
