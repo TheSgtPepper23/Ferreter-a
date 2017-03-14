@@ -6,6 +6,8 @@
 package gui;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -14,8 +16,8 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import usuarioSistema.Usuario;
 
 /**
  *
@@ -24,20 +26,19 @@ import usuarioSistema.Usuario;
 public class MenuPrincipal extends Application {
   private GridPane grid;
   private Button agregar, comprar, editar, inventario, eliminar, buscar, vender, ventas;
-  private Image iAgregar, iComprar, iEditar, iInventario, iEliminar, iBuscar, iVender, iVentas;
+  private Image iAgregar, iComprar, iInventario, iBuscar, iVender, iVentas;
   private Tooltip lAgregar, lComprar, lEditar, lInventario, lEliminar, lBuscar, lVender, lVentas;
-  private Usuario actual;
+  private Text titulo;
+  private boolean admin;
   
-  public MenuPrincipal (Usuario actual) {
-    this.actual =actual;
+  public MenuPrincipal (boolean admin) {
+    this.admin = admin;
   }
   
   @Override
   public void start(Stage primaryStage) {
-    primaryStage = new Stage(); 
-    Scene escena = new Scene(grid, 400, 175);
-    primaryStage.setScene(escena);
-    primaryStage.show();
+    primaryStage.setTitle("Menu principal");
+    
     grid = new GridPane();
     agregar = new Button();
     comprar = new Button();
@@ -49,9 +50,7 @@ public class MenuPrincipal extends Application {
     ventas = new Button();
     iAgregar = new Image("recursos/Add.png");
     iComprar = new Image("recursos/Buy.png");
-    iEditar = new Image("recursos/Edit.png");
     iInventario = new Image("recursos/Inventory.png");
-    iEliminar = new Image("recursos/Remove.png");
     iBuscar = new Image("recursos/Search.png");
     iVender = new Image("recursos/Sell.png");
     iVentas = new Image("recursos/Sells.png");
@@ -63,6 +62,12 @@ public class MenuPrincipal extends Application {
     lBuscar = new Tooltip("Buscar artículos");
     lVender = new Tooltip("Realizar venta");
     lVentas = new Tooltip("Mostrar ventas");
+    
+    if(admin) {
+      agregar.disableProperty();
+      editar.disableProperty();
+      eliminar.disableProperty();
+    }
    
     grid.setAlignment(Pos.CENTER_LEFT);
     grid.setHgap(20);
@@ -72,11 +77,9 @@ public class MenuPrincipal extends Application {
     agregar.setTooltip(lAgregar);
     comprar.setGraphic(new ImageView(iComprar));
     comprar.setTooltip(lComprar);
-    editar.setGraphic(new ImageView(iEditar));
     editar.setTooltip(lEditar);
     inventario.setGraphic(new ImageView(iInventario));
     inventario.setTooltip(lInventario);
-    eliminar.setGraphic(new ImageView(iEliminar));
     eliminar.setTooltip(lEliminar);
     buscar.setGraphic(new ImageView(iBuscar));
     buscar.setTooltip(lBuscar);
@@ -86,17 +89,22 @@ public class MenuPrincipal extends Application {
     ventas.setTooltip(lVentas);
     grid.add(agregar, 0, 0);
     grid.add(comprar, 1, 0);
-    grid.add(editar, 2, 0);
-    grid.add(inventario, 3, 0);
-    grid.add(eliminar, 0, 1);
-    grid.add(buscar, 1, 1);
-    grid.add(vender, 2, 1);
-    grid.add(ventas, 3, 1);
+    grid.add(inventario, 2, 0);
+    grid.add(buscar, 0, 1);
+    grid.add(vender, 1, 1);
+    grid.add(ventas, 2, 1);
     
-    if(!actual.isAdmin()) {
-      agregar.isDisable();
-      editar.isDisable();
-      eliminar.isDisable();
-    }
+    agregar.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent t) {
+        AgregarArticulo agregar = new AgregarArticulo();
+        agregar.start(primaryStage);
+      }
+    });
+    
+    
+    Scene escena = new Scene(grid, 350, 175);
+    primaryStage.setScene(escena);
+    primaryStage.show();
   }
 }

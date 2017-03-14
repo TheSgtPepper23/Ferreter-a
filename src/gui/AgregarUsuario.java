@@ -80,7 +80,7 @@ public class AgregarUsuario extends Application {
       public void handle(ActionEvent t) {
         user = new Usuario(tNombreUs.getText(), pContraUs.getText(), administra());
         Usuario.usuarios.add(user);
-        archivo.escribirArchivo(Usuario.usuarios, archivo.getArchUsuarios());
+        archivo.escribirUsuario();
         try {
           stop();
         } catch (Exception ex) {

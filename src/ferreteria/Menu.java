@@ -106,8 +106,8 @@ public class Menu {
         inv.ventasMes(lect.leerString());
         break;
       case 13:
-        file.escribirArchivo(Inventario.articulos, file.getArchInventario());
-        file.escribirArchivo(Venta.ventas, file.getArchVentas());
+        file.escribirInventario();
+        file.escribirVentas();
         break;
       default:
         System.out.println("Esa no es una opción válida");

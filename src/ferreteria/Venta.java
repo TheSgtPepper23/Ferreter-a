@@ -16,7 +16,7 @@ public class Venta implements java.io.Serializable {
   private Date fecha;
   private String carrito;
   private double gTotal;
-  static ArrayList<Venta> ventas = new ArrayList<>();
+  public static ArrayList<Venta> ventas = new ArrayList<>();
   /**
    * Constructor por de la clase Venta 
    */

@@ -23,8 +23,8 @@ public class Ferreteria {
     // TODO code application logic here
     Menu menu = new Menu();
     Archivo archivo = new Archivo();
-    Inventario.articulos = (ArrayList) archivo.leerArchivo(archivo.getArchInventario());
-    Venta.ventas = (ArrayList) archivo.leerArchivo(archivo.getArchVentas());
+    archivo.leerInventario();
+    archivo.leerVentas();
     int opcion;
     do {
       menu.mostarOpciones();

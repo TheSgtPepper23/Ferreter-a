@@ -5,6 +5,8 @@
  */
 package accesoDatos;
 
+import ferreteria.Articulo;
+import ferreteria.Venta;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -20,6 +22,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import usuarioSistema.Usuario;
 
 /**
  *
@@ -31,7 +34,7 @@ public class Archivo {
   private final File archInventario;
   private final File archClaves;
   private final File archVentas;
-  private final File archUsuarios;
+  private final File archUsuarios; 
   
   public Archivo (){
     archInventario = new File("inventario.dat");
@@ -40,41 +43,18 @@ public class Archivo {
     archUsuarios = new File("usuarios.dat");
   }
   
-  public File getArchInventario () {
-    return archInventario;
-  }
-  
-  public File getArchVentas () {
-    return archVentas;
-  }
-  
-  public File getArchClaves () {
-    return archClaves;
-  }
-  
-  public File getArchUsuarios () {
-    return archUsuarios;
-  }
-  
-  /**
-   * Lee los datos del arcivo .dat donde se almacenan los artículos del inventario
-   * @param archivo
-   * @return Objetos leidos del archivo inventario.dat
-   * 
-   */
-  public Object leerArchivo(File archivo) {
- 
-    FileInputStream fis = null;
-    ObjectInputStream ois = null;
+  public void leerUsuario() {
+    
     try {
-      if(archivo.exists()) {
-        fis = new FileInputStream(archivo);
+      FileInputStream fis = null;
+      ObjectInputStream ois = null;
+      if(archUsuarios.exists()) {
+        fis = new FileInputStream(archUsuarios);
         ois = new ObjectInputStream(fis);
-        
-        return ois.readObject();
+        Usuario.usuarios = (ArrayList<Usuario>) ois.readObject();
       }
       else {
-        archivo.createNewFile();
+        archUsuarios.createNewFile();
       }
       
     } catch (FileNotFoundException ex) {
@@ -82,24 +62,113 @@ public class Archivo {
     } catch (IOException | ClassNotFoundException ex) {
       Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
     }
-    return null;
+  }
+  
+  public void escribirUsuario () {
+    try {
+      if (archUsuarios.exists()) {
+        FileOutputStream fos = new FileOutputStream(archUsuarios);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(Usuario.usuarios);
+        fos.close();
+        oos.close();
+      }
+      else {
+        archUsuarios.createNewFile();
+      }
+      
+    } catch (FileNotFoundException ex) {
+      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IOException ex) {
+      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
+  
+  
+  /**
+   * Lee los datos del arcivo .dat donde se almacenan los artículos del inventario
+   * @param archivo
+   * @return Objetos leidos del archivo inventario.dat
+   * 
+   */
+  public void leerInventario() {
+   
+    try {
+      FileInputStream fis = null;
+      ObjectInputStream ois = null;
+      if(archInventario.exists()) {
+        fis = new FileInputStream(archInventario);
+        ois = new ObjectInputStream(fis);
+        Articulo.articulos = (ArrayList<Articulo>) ois.readObject();
+      }
+      else {
+        archInventario.createNewFile();
+      }
+      
+    } catch (FileNotFoundException ex) {
+      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IOException | ClassNotFoundException ex) {
+      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+    }
   }
   
   /**
    * Escribe los datos del arraylist en el archivo .dat
    * @param arreglo Arraylist de objetos tipo Articulo
    */
-  public void escribirArchivo (ArrayList arreglo, File archivo) {
+  public void escribirInventario () {
     try {
-      if (archivo.exists()) {
-        FileOutputStream fos = new FileOutputStream(archivo);
+      if (archInventario.exists()) {
+        FileOutputStream fos = new FileOutputStream(archInventario);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeObject(arreglo);
+        oos.writeObject(Articulo.articulos);
         fos.close();
         oos.close();
       }
       else {
-        archivo.createNewFile();
+        archInventario.createNewFile();
+      }
+      
+    } catch (FileNotFoundException ex) {
+      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IOException ex) {
+      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
+  
+  
+  public void leerVentas() {
+    
+    try {
+      FileInputStream fis = null;
+      ObjectInputStream ois = null;
+      if(archVentas.exists()) {
+        fis = new FileInputStream(archVentas);
+        ois = new ObjectInputStream(fis);
+        Venta.ventas = (ArrayList<Venta>) ois.readObject();
+      }
+      else {
+        archVentas.createNewFile();
+      }
+      
+    } catch (FileNotFoundException ex) {
+      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (IOException | ClassNotFoundException ex) {
+      Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
+  
+  public void escribirVentas () {
+    try {
+      if (archVentas.exists()) {
+        FileOutputStream fos = new FileOutputStream(archVentas);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(Venta.ventas);
+        fos.close();
+        oos.close();
+      }
+      else {
+        archVentas.createNewFile();
       }
       
     } catch (FileNotFoundException ex) {
@@ -111,9 +180,9 @@ public class Archivo {
   
   /**
    * Lee las líneas de texto en un arhivo
-   * @return El número de líneas del archivo
+   * @return una cadena con la palabra FERRE mas el número de clave actual
    */
-  public int leerClaves () {
+  public String generarClaves () {
     int cont = 0;
     if(archClaves.exists()) {
       try {
@@ -137,7 +206,7 @@ public class Archivo {
         Logger.getLogger(Archivo.class.getName()).log(Level.SEVERE, null, ex);
       }
     }
-    return cont;
+    return "FERRE" + cont;
   }
   
   /**

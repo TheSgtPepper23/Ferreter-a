@@ -16,6 +16,7 @@ import java.util.Date;
 /**
  * Contiene los metodos para manipular los elementos del inventario
  * @author José Andrés Domínguez González
+ * @deprecated 
  */
 public class Inventario {
   
@@ -23,7 +24,6 @@ public class Inventario {
   private Venta nuevaVenta;
   private Teclado leer;
   private Archivo arxiu;
-  static ArrayList<Articulo> articulos = new ArrayList<>();
   private final double IVA;
   private final double GANANCIA;
 
@@ -40,9 +40,10 @@ public class Inventario {
   /**
    * Genera un clave de tipo String para un artículo
    * @return String compuesto por los caracteres FERRE más el número de líneas del archivo claves.txt
+   * @deprecated 
    */
   public String generarClave () {
-    return "FERRE" + arxiu.leerClaves();
+    return "FERRE" + arxiu.generarClaves();
   }
   
   /**
@@ -64,23 +65,23 @@ public class Inventario {
     System.out.println("¿Qué tipo de unidad usa el artículo?:");
     articulo.setTipoUnidad(leer.leerString().toUpperCase());
     arxiu.escribirClaves(articulo.getClave());
-    articulos.add(articulo);
-    arxiu.escribirArchivo(articulos, arxiu.getArchInventario());
+    Articulo.articulos.add(articulo);
+    arxiu.escribirInventario();
   }
   
   /**
    * Muestra los datos de los objetos almacenados en el arraylist del archivo
    */
   public void mostrarArticulos() {
-    for (int i = 0; i < articulos.size(); i++)
+    for (int i = 0; i < Articulo.articulos.size(); i++)
     {
       System.out.println("_____________________________________________________");
-      System.out.println("Clave: "+articulos.get(i).getClave());
-      System.out.println("Nombre: "+articulos.get(i).getNombre());
-      System.out.println("Descripción: "+articulos.get(i).getDescripcion());
-      System.out.println("Existencia: "+articulos.get(i).getExistencia());
-      System.out.println("Precio de compra: "+articulos.get(i).getPrecioCompra());
-      System.out.println("Tipo de unidad: "+ articulos.get(i).getTipoUnidad());
+      System.out.println("Clave: "+Articulo.articulos.get(i).getClave());
+      System.out.println("Nombre: "+Articulo.articulos.get(i).getNombre());
+      System.out.println("Descripción: "+Articulo.articulos.get(i).getDescripcion());
+      System.out.println("Existencia: "+Articulo.articulos.get(i).getExistencia());
+      System.out.println("Precio de compra: "+Articulo.articulos.get(i).getPrecioCompra());
+      System.out.println("Tipo de unidad: "+ Articulo.articulos.get(i).getTipoUnidad());
       System.out.println("_____________________________________________________");
     }
   }
@@ -93,13 +94,14 @@ public class Inventario {
   public void buscarArticulo(String buscar) {
     buscar = buscar.toUpperCase();
     boolean flag = false;
-    for(int i = 0; i < articulos.size(); i++) {
-      if(articulos.get(i).getNombre().equals(buscar) || articulos.get(i).getClave().equals(buscar)) {
-        System.out.println("Nombre: "+articulos.get(i).getNombre());
-        System.out.println("Descripción: "+articulos.get(i).getDescripcion());
-        System.out.println("Existencia: "+articulos.get(i).getExistencia());
-        System.out.println("Precio de compra: "+articulos.get(i).getPrecioCompra());
-        System.out.println("Tipo de unidad: "+articulos.get(i).getTipoUnidad());
+    for(int i = 0; i < Articulo.articulos.size(); i++) {
+      if(Articulo.articulos.get(i).getNombre().equals(buscar) || 
+              Articulo.articulos.get(i).getClave().equals(buscar)) {
+        System.out.println("Nombre: "+Articulo.articulos.get(i).getNombre());
+        System.out.println("Descripción: "+Articulo.articulos.get(i).getDescripcion());
+        System.out.println("Existencia: "+Articulo.articulos.get(i).getExistencia());
+        System.out.println("Precio de compra: "+Articulo.articulos.get(i).getPrecioCompra());
+        System.out.println("Tipo de unidad: "+Articulo.articulos.get(i).getTipoUnidad());
         flag = true;
         break;
       }
@@ -117,9 +119,10 @@ public class Inventario {
   public void eliminarArticulo (String eliminar) {
     eliminar = eliminar.toUpperCase();
     boolean flag = false;
-    for(int i = 0; i < articulos.size(); i++) {
-      if(articulos.get(i).getNombre().equals(eliminar) || articulos.get(i).getClave().equals(eliminar)) {
-        articulos.remove(i);
+    for(int i = 0; i < Articulo.articulos.size(); i++) {
+      if(Articulo.articulos.get(i).getNombre().equals(eliminar) || 
+              Articulo.articulos.get(i).getClave().equals(eliminar)) {
+        Articulo.articulos.remove(i);
         flag = true;
         break;
       }
@@ -137,21 +140,22 @@ public class Inventario {
   public void editarArticulo (String editar) {
     editar = editar.toUpperCase();
     boolean flag = false;
-    for(int i = 0; i < articulos.size(); i++) {
-      if(articulos.get(i).getNombre().equals(editar) || articulos.get(i).getClave().equals(editar)) {
+    for(int i = 0; i < Articulo.articulos.size(); i++) {
+      if(Articulo.articulos.get(i).getNombre().equals(editar) || 
+              Articulo.articulos.get(i).getClave().equals(editar)) {
         System.out.println("¿Qué elemento desea modificar?\n1) Nombre\n2) Descripción\n");
         switch(leer.leerEntero()) {
           case 1:
             System.out.println("Ingrese el nuevo nombre para el artículo");
             leer.salto();
-            articulos.get(i).setNombre(leer.leerString().toUpperCase());
+            Articulo.articulos.get(i).setNombre(leer.leerString().toUpperCase());
             System.out.println("Los cambios se han realizado y se guardaran al salir");
-            arxiu.escribirArchivo(articulos, arxiu.getArchInventario());
+            arxiu.escribirInventario();
             break;
           case 2:
             System.out.println("Ingrese la nueva descripción para el artículo");
             leer.salto();
-            articulos.get(i).setDescripcion(leer.leerString().toUpperCase());
+            Articulo.articulos.get(i).setDescripcion(leer.leerString().toUpperCase());
             System.out.println("Los cambios se han realizado y se guardaran al salir");
             break;
         }
@@ -169,7 +173,7 @@ public class Inventario {
    * Ordena los elementos del array list en orden alfabético ascendente por la clave 
    */
   public void ordenarClave () {
-    Collections.sort(articulos, new Comparator<Articulo>(){
+    Collections.sort(Articulo.articulos, new Comparator<Articulo>(){
       @Override
       public int compare(Articulo a1, Articulo a2){
         return new Integer(a1.getClave()).compareTo(new Integer(a2.getClave()));
@@ -181,7 +185,7 @@ public class Inventario {
    * Ordena los elementos del array list en orden alfabético ascendente por el nombre
    */
   public void ordenarNombre () {
-    Collections.sort(articulos, new Comparator<Articulo>(){
+    Collections.sort(Articulo.articulos, new Comparator<Articulo>(){
       @Override
       public int compare(Articulo a1, Articulo a2){
         return a1.getNombre().compareTo(a2.getNombre());
@@ -202,17 +206,19 @@ public class Inventario {
     do {
       System.out.println("Ingrese el nombre o la clave del producto que desea");
       nombre = leer.leerString().toUpperCase();
-      for(i = 0; i < articulos.size(); i++) {
-        if(articulos.get(i).getNombre().equals(nombre) || articulos.get(i).getClave().equals(nombre)) {
-          unidad = determinaUnidad(articulos.get(i));
+      for(i = 0; i < Articulo.articulos.size(); i++) {
+        if(Articulo.articulos.get(i).getNombre().equals(nombre) || 
+                Articulo.articulos.get(i).getClave().equals(nombre)) {
+          unidad = determinaUnidad(Articulo.articulos.get(i));
           System.out.println("¿Cuántos unidades del artículo desea comprar?");
           cantidad = leer.leerEntero();
           leer.salto();
-          subtotal = cantidad * articulos.get(i).getPrecioCompra()*GANANCIA;
+          subtotal = cantidad * Articulo.articulos.get(i).getPrecioCompra()*GANANCIA;
           total = subtotal*IVA;
-          if(suficiente(articulos.get(i), cantidad)) {
-            articulos.get(i).setExistencia(articulos.get(i).getExistencia()-(cantidad*unidad));
-            carrito += "\nNombre: "+articulos.get(i).getNombre()+"\nCantidad: "+cantidad+
+          if(suficiente(Articulo.articulos.get(i), cantidad)) {
+            Articulo.articulos.get(i).setExistencia(Articulo.articulos.get(i).getExistencia()-
+                    (cantidad*unidad));
+            carrito += "\nNombre: "+Articulo.articulos.get(i).getNombre()+"\nCantidad: "+cantidad+
                 "\nSubtotal: "+subtotal+"\nTotal: "+ total+"\n\n";
             gTotal += total;
           }
@@ -290,9 +296,9 @@ public class Inventario {
    */
   public double valorInventario () {
     double suma = 0;
-    for(int i =0; i < articulos.size(); i++) {
-      suma += articulos.get(i).getPrecioCompra()*(articulos.get(i).getExistencia()/
-          determinaUnidad(articulos.get(i)));
+    for(int i =0; i < Articulo.articulos.size(); i++) {
+      suma += Articulo.articulos.get(i).getPrecioCompra()*(Articulo.articulos.get(i).getExistencia()/
+          determinaUnidad(Articulo.articulos.get(i)));
     }
     return suma;
   }

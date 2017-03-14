@@ -5,6 +5,8 @@
  */
 package ferreteria;
 
+import java.util.ArrayList;
+
 /**
  * 
  * @author José Andrés Domínguez González
@@ -17,9 +19,20 @@ public class Articulo implements java.io.Serializable {
   private String descripcion;
   private double precioCompra;
   private int existencia;
+  public static ArrayList<Articulo> articulos = new ArrayList<>();
   private String tipoUnidad;
     
-  public Articulo() {}
+  public Articulo () {}
+  
+  public Articulo(String clave, String nombre, String descripcion, double precioCompra, 
+          int existencia, String tipoUnidad ) {
+    this.clave = clave;
+    this.nombre = nombre;
+    this.descripcion = descripcion;
+    this.precioCompra = precioCompra;
+    this.existencia = existencia;
+    this.tipoUnidad = tipoUnidad;
+  }
   
   public void setClave (String clave) {
     this.clave = clave;

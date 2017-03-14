@@ -6,6 +6,7 @@
 package gui;
 
 import accesoDatos.Archivo;
+import ferreteria.Articulo;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -21,6 +22,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import recursos.Utilidades;
 import usuarioSistema.Usuario;
 
 /**
@@ -47,9 +49,6 @@ public class Login extends Application {
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle("Log In");
-    Scene escena = new Scene(grid, 450, 175);
-    primaryStage.setScene(escena);
-    primaryStage.show();
     archivo = new Archivo();
     grid = new GridPane();
     titulo = new Text("Ingrese su nombre de usuario y contraseña");
@@ -74,7 +73,8 @@ public class Login extends Application {
     cajaBoton.getChildren().add(bIngresar);
     grid.add(cajaBoton, 1, 4);
     grid.add(nuevo, 0, 4);
-    Usuario.usuarios = (ArrayList<Usuario>) archivo.leerArchivo(archivo.getArchUsuarios());
+    archivo.leerUsuario();
+    archivo.leerInventario();
       
     nuevo.setOnAction((ActionEvent t) -> {
       AgregarUsuario anadir = new AgregarUsuario();
@@ -88,14 +88,19 @@ public class Login extends Application {
         }
       }
       if(user.getContrasenia().equals(contraTexto.getText())) {
-        MenuPrincipal menu = new MenuPrincipal(user);
+        Utilidades.setAdmin(user.isAdmin());
+        MenuPrincipal menu = new MenuPrincipal(Utilidades.getAdmin());
         menu.start(primaryStage);
       }
       else {
         System.out.println("La contraseña es incorrecta");
       }
       
-    });
+    }); 
+    
+    Scene escena = new Scene(grid, 450, 175);
+    primaryStage.setScene(escena);
+    primaryStage.show();
   }
   
   /**
