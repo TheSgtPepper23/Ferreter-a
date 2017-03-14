@@ -6,6 +6,8 @@
 package gui;
 
 import accesoDatos.Archivo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -79,6 +81,13 @@ public class AgregarUsuario extends Application {
         user = new Usuario(tNombreUs.getText(), pContraUs.getText(), administra());
         Usuario.usuarios.add(user);
         archivo.escribirArchivo(Usuario.usuarios, archivo.getArchUsuarios());
+        try {
+          stop();
+        } catch (Exception ex) {
+          Logger.getLogger(AgregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Login log = new Login();
+        log.start(primaryStage);
       }
     });
     

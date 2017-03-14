@@ -47,6 +47,9 @@ public class Login extends Application {
   @Override
   public void start(Stage primaryStage) {
     primaryStage.setTitle("Log In");
+    Scene escena = new Scene(grid, 450, 175);
+    primaryStage.setScene(escena);
+    primaryStage.show();
     archivo = new Archivo();
     grid = new GridPane();
     titulo = new Text("Ingrese su nombre de usuario y contraseña");
@@ -77,10 +80,6 @@ public class Login extends Application {
       AgregarUsuario anadir = new AgregarUsuario();
       anadir.start(primaryStage);
     });
-        
-    Scene escena = new Scene(grid, 450, 175);
-    primaryStage.setScene(escena);
-    primaryStage.show();
     
     bIngresar.setOnAction((ActionEvent t) -> {
       for (int i = 0; i < Usuario.usuarios.size(); i++) {
@@ -89,7 +88,7 @@ public class Login extends Application {
         }
       }
       if(user.getContrasenia().equals(contraTexto.getText())) {
-        MenuPrincipal menu = new MenuPrincipal();
+        MenuPrincipal menu = new MenuPrincipal(user);
         menu.start(primaryStage);
       }
       else {
