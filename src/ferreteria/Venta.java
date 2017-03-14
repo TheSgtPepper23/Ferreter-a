@@ -14,9 +14,9 @@ import java.util.Date;
  */
 public class Venta implements java.io.Serializable {
   private Date fecha;
-  private String carrito;
   private double gTotal;
   public static ArrayList<Venta> ventas = new ArrayList<>();
+  public static ArrayList<Articulo> carrito = new ArrayList<>();
   /**
    * Constructor por de la clase Venta 
    */
@@ -36,11 +36,11 @@ public class Venta implements java.io.Serializable {
     return fecha;
   }
   
-  public String getCarrito () {
+  public ArrayList getCarrito () {
     return carrito;
   }
   
-  public void setCarrito (String carrito) {
+  public void setCarrito (ArrayList carrito) {
     this.carrito = carrito;
   }
 }

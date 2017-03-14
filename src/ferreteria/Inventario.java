@@ -49,6 +49,7 @@ public class Inventario {
   /**
    * Utiliza los métodos set de la clase Articulo para crear una nueva instancia y la guarda en un ArrayList llamado articulos
    * @throws IOException 
+   * @deprecated 
    */
   public void agregarArticulo() throws IOException {
     articulo = new Articulo();
@@ -71,6 +72,7 @@ public class Inventario {
   
   /**
    * Muestra los datos de los objetos almacenados en el arraylist del archivo
+   * @deprecated 
    */
   public void mostrarArticulos() {
     for (int i = 0; i < Articulo.articulos.size(); i++)
@@ -90,6 +92,7 @@ public class Inventario {
    * 
    * @param buscar Es nombre o clave del archivo que se desea visualizar
    * Busca articulos por nombre o clave
+   * 
    */
   public void buscarArticulo(String buscar) {
     buscar = buscar.toUpperCase();

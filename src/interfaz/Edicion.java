@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package interfaz;
 
 import accesoDatos.Archivo;
 import ferreteria.Articulo;
@@ -26,27 +26,26 @@ import recursos.Utilidades;
 /**
  *
  * @author andres
+ * @version 1.0
+ * Permite editar los atributos de un objeto
  */
-public class AgregarArticulo extends Application {
-  
-  private GridPane grid;
+public class Edicion extends Application {
   private Articulo articulo;
   private Archivo archivo;
-  private Text titulo;
+  private GridPane grid;
   private Label lNombre, lDescrip, lPrecio, lCantidad, lUnidad;
   private TextField tNombre, tDescrip, tPrecio, tCantidad;
   private ChoiceBox cUnidad;
-  private Button bagregar, bregresar;
+  private Text titulo;
+  private Button beditar, bregresar;
   
+  public Edicion (Articulo articulo) {
+    this.articulo = articulo;
+  }
   @Override
   public void start(Stage primaryStage) {
-    primaryStage.setTitle("Agregar artículo");
     grid = new GridPane();
-    grid.setAlignment(Pos.CENTER_LEFT);
-    grid.setHgap(10);
-    grid.setVgap(10);
-    grid.setPadding(new Insets(25,25,25,25));
-    titulo = new Text("Ingrese los datos del nuevo producto");
+    titulo = new Text("Ingrese los datos que desee editar");
     lNombre = new Label("Nombre: ");
     lDescrip = new Label("Descripción: ");
     lPrecio = new Label("Precio: ");
@@ -57,34 +56,19 @@ public class AgregarArticulo extends Application {
     tPrecio = new TextField();
     tCantidad = new TextField();
     cUnidad = new ChoiceBox(FXCollections.observableArrayList("Pieza", "Decena", "Centena"));
-    bagregar = new Button("Agregar");
+    beditar = new Button("Guardar cambios");
     bregresar = new Button("Regresar");
     archivo = new Archivo();
     
-    bagregar.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent t) {
-        articulo = new Articulo(archivo.generarClaves(), tNombre.getText().toUpperCase(), 
-                tDescrip.getText().toUpperCase(), Utilidades.stringToDouble(tPrecio.getText()), 
-                Utilidades.stringToInt(tCantidad.getText()), 
-                cUnidad.getSelectionModel().getSelectedItem().toString().toUpperCase());
-        Articulo.articulos.add(articulo);
-        archivo.escribirInventario();
-        tNombre.setText("");
-        tDescrip.setText("");
-        tPrecio.setText("");
-        tCantidad.setText("");
-      }
-    });
-    
-    bregresar.setOnAction(new EventHandler<ActionEvent>() {
-      @Override
-      public void handle(ActionEvent t) {
-        MenuPrincipal menu = new MenuPrincipal(Utilidades.getAdmin());
-        menu.start(primaryStage);
-      }
-    });
-    
+    tNombre.setText(articulo.getNombre());
+    tDescrip.setText(articulo.getDescripcion());
+    tPrecio.setText(Utilidades.doubleToString(articulo.getPrecioCompra()));
+    tCantidad.setText(Utilidades.intToString(articulo.getExistencia()));
+    cUnidad.getSelectionModel().select(articulo.getTipoUnidad());
+    grid.setAlignment(Pos.CENTER_LEFT);
+    grid.setHgap(10);
+    grid.setVgap(10);
+    grid.setPadding(new Insets(25,25,25,25));
     grid.add(titulo, 0, 0, 2, 1);
     grid.add(lNombre, 0, 1);
     grid.add(tNombre, 1, 1);
@@ -97,14 +81,39 @@ public class AgregarArticulo extends Application {
     grid.add(lUnidad, 0, 5);
     grid.add(cUnidad, 1, 5);
     grid.add(bregresar, 0, 7);
-    grid.add(bagregar, 1, 7);
+    grid.add(beditar, 1, 7);
     
+    beditar.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent t) {
+        articulo.setNombre(tNombre.getText().toUpperCase());
+        articulo.setDescripcion(tDescrip.getText().toUpperCase());
+        articulo.setPrecioCompra(Utilidades.stringToDouble(tPrecio.getText()));
+        articulo.setExistencia(Utilidades.stringToInt(tCantidad.getText()));
+        articulo.setTipoUnidad(cUnidad.getSelectionModel().getSelectedItem().toString().toUpperCase());
+        archivo.escribirInventario();
+        tablaInventario invent = new tablaInventario(Utilidades.getAdmin());
+        invent.start(primaryStage);
+      }
+    });
     
-    Scene escena = new Scene(grid, 275, 275);
-    primaryStage.setScene(escena);
+    bregresar.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent t) {
+        tablaInventario invent = new tablaInventario(Utilidades.getAdmin());
+        invent.start(primaryStage);
+      }
+    });
+    
+    Scene scene = new Scene(grid, 300, 250);
+    primaryStage.setTitle("Editar artículo");
+    primaryStage.setScene(scene);
     primaryStage.show();
-    
   }
+
+  /**
+   * @param args the command line arguments
+   */
   public static void main(String[] args) {
     launch(args);
   }

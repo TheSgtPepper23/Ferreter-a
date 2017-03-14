@@ -30,4 +30,12 @@ public class Utilidades {
     return Integer.parseInt(cadena);
   }
   
+  public static String doubleToString (Double doble) {
+    return doble.toString();
+  }
+  
+  public static String intToString (Integer entero) {
+    return entero.toString();
+  }
+  
 }

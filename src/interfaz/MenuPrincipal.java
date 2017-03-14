@@ -3,21 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package interfaz;
 
+import ferreteria.Articulo;
+import java.util.Optional;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import recursos.Utilidades;
 
 /**
  *
@@ -28,7 +33,6 @@ public class MenuPrincipal extends Application {
   private Button agregar, comprar, editar, inventario, eliminar, buscar, vender, ventas;
   private Image iAgregar, iComprar, iInventario, iBuscar, iVender, iVentas;
   private Tooltip lAgregar, lComprar, lEditar, lInventario, lEliminar, lBuscar, lVender, lVentas;
-  private Text titulo;
   private boolean admin;
   
   public MenuPrincipal (boolean admin) {
@@ -63,10 +67,8 @@ public class MenuPrincipal extends Application {
     lVender = new Tooltip("Realizar venta");
     lVentas = new Tooltip("Mostrar ventas");
     
-    if(admin) {
-      agregar.disableProperty();
-      editar.disableProperty();
-      eliminar.disableProperty();
+    if(!admin) {
+      agregar.setDisable(true);
     }
    
     grid.setAlignment(Pos.CENTER_LEFT);
@@ -102,8 +104,52 @@ public class MenuPrincipal extends Application {
       }
     });
     
+    inventario.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent t) {
+        tablaInventario invent = new tablaInventario(Utilidades.getAdmin());
+        invent.start(primaryStage);
+      }
+    });
     
-    Scene escena = new Scene(grid, 350, 175);
+    buscar.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent t) {
+        TextInputDialog busqueda = new TextInputDialog();
+        busqueda.setTitle("Búsqueda de artículos");
+        busqueda.setHeaderText("Introduzca el nombre o clave del aqrtículo que desee buscar");
+        
+        Optional<String> result = busqueda.showAndWait();
+        if (result.isPresent()){
+          boolean flag = false;
+          for(int i = 0; i < Articulo.articulos.size(); i++) {
+            if(Articulo.articulos.get(i).getNombre().equals(result.get().toUpperCase()) || 
+              Articulo.articulos.get(i).getClave().equals(result.get().toUpperCase())) {
+              MostrarUno muestra = new MostrarUno(Articulo.articulos.get(i));
+              muestra.start(primaryStage);
+              flag = true;
+            }
+          }
+          if(!flag){
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("No se encontró lo que buscaba");
+            alert.showAndWait();
+          }
+        }
+      }
+    });
+    
+    vender.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent t) {
+        RealizaVenta vende = new RealizaVenta();
+        vende.start(primaryStage);
+      }
+    });
+    
+    
+    Scene escena = new Scene(grid, 300, 175);
     primaryStage.setScene(escena);
     primaryStage.show();
   }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package interfaz;
 
 import accesoDatos.Archivo;
 import java.util.logging.Level;
@@ -14,6 +14,8 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -86,6 +88,11 @@ public class AgregarUsuario extends Application {
         } catch (Exception ex) {
           Logger.getLogger(AgregarUsuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        Alert alerta = new Alert(AlertType.INFORMATION);
+        alerta.setTitle("Confirmación");
+        alerta.setHeaderText(null);
+        alerta.setContentText("El usuario se creo correctamente");
+        alerta.showAndWait();
         Login log = new Login();
         log.start(primaryStage);
       }
