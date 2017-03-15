@@ -199,62 +199,62 @@ public class Inventario {
   /**
    * Realiza una venta de productos en el inventario
    */
-  public void realizarVenta () {
-    nuevaVenta = new Venta();
-    String carrito = "";
-    int opcion = 0, cantidad, unidad, i;
-    String nombre;
-    double total, subtotal, gTotal = 0;
-    
-    do {
-      System.out.println("Ingrese el nombre o la clave del producto que desea");
-      nombre = leer.leerString().toUpperCase();
-      for(i = 0; i < Articulo.articulos.size(); i++) {
-        if(Articulo.articulos.get(i).getNombre().equals(nombre) || 
-                Articulo.articulos.get(i).getClave().equals(nombre)) {
-          unidad = determinaUnidad(Articulo.articulos.get(i));
-          System.out.println("¿Cuántos unidades del artículo desea comprar?");
-          cantidad = leer.leerEntero();
-          leer.salto();
-          subtotal = cantidad * Articulo.articulos.get(i).getPrecioCompra()*GANANCIA;
-          total = subtotal*IVA;
-          if(suficiente(Articulo.articulos.get(i), cantidad)) {
-            Articulo.articulos.get(i).setExistencia(Articulo.articulos.get(i).getExistencia()-
-                    (cantidad*unidad));
-            carrito += "\nNombre: "+Articulo.articulos.get(i).getNombre()+"\nCantidad: "+cantidad+
-                "\nSubtotal: "+subtotal+"\nTotal: "+ total+"\n\n";
-            gTotal += total;
-          }
-          else {
-            System.out.println("Lo sentimos la vena no pudo llevarse a cabo");
-          }
-        }
-        else {
-          System.out.println("Lo sentimos la vena no pudo llevarse a cabo");
-        }
-        System.out.println("¿Desea comprar otro artículo?\nTeclee '1' para aceptar y cualquier otro"
-          + "número para salir");
-        opcion = leer.leerEntero();
-        leer.salto();
-      }
-    }while(opcion == 1);
-    nuevaVenta.setCarrito(carrito);
-    nuevaVenta.setGTotal(gTotal);
-    Venta.ventas.add(nuevaVenta);
-  }
+//  public void realizarVenta () {
+//    nuevaVenta = new Venta();
+//    String carrito = "";
+//    int opcion = 0, cantidad, unidad, i;
+//    String nombre;
+//    double total, subtotal, gTotal = 0;
+//    
+//    do {
+//      System.out.println("Ingrese el nombre o la clave del producto que desea");
+//      nombre = leer.leerString().toUpperCase();
+//      for(i = 0; i < Articulo.articulos.size(); i++) {
+//        if(Articulo.articulos.get(i).getNombre().equals(nombre) || 
+//                Articulo.articulos.get(i).getClave().equals(nombre)) {
+//          unidad = determinaUnidad(Articulo.articulos.get(i));
+//          System.out.println("¿Cuántos unidades del artículo desea comprar?");
+//          cantidad = leer.leerEntero();
+//          leer.salto();
+//          subtotal = cantidad * Articulo.articulos.get(i).getPrecioCompra()*GANANCIA;
+//          total = subtotal*IVA;
+//          if(suficiente(Articulo.articulos.get(i), cantidad)) {
+//            Articulo.articulos.get(i).setExistencia(Articulo.articulos.get(i).getExistencia()-
+//                    (cantidad*unidad));
+//            carrito += "\nNombre: "+Articulo.articulos.get(i).getNombre()+"\nCantidad: "+cantidad+
+//                "\nSubtotal: "+subtotal+"\nTotal: "+ total+"\n\n";
+//            gTotal += total;
+//          }
+//          else {
+//            System.out.println("Lo sentimos la vena no pudo llevarse a cabo");
+//          }
+//        }
+//        else {
+//          System.out.println("Lo sentimos la vena no pudo llevarse a cabo");
+//        }
+//        System.out.println("¿Desea comprar otro artículo?\nTeclee '1' para aceptar y cualquier otro"
+//          + "número para salir");
+//        opcion = leer.leerEntero();
+//        leer.salto();
+//      }
+//    }while(opcion == 1);
+//    nuevaVenta.setCarrito(carrito);
+//    nuevaVenta.setGTotal(gTotal);
+//    Venta.ventas.add(nuevaVenta);
+//  }
   
   /**
    * Muestra las ventas que se han realizado y la suma total de las mismas
    */
-  public void mostrarVentas () {
-    for(int i = 0; i < Venta.ventas.size(); i++) {
-      System.out.println(simplificaFecha(Venta.ventas.get(i).getFecha()));
-      System.out.println("---------------------------------");
-      System.out.println(Venta.ventas.get(i).getCarrito());
-      System.out.println("Gran total: "+Venta.ventas.get(i).getGTotal());
-      System.out.println("*********************************");
-    }
-  }
+//  public void mostrarVentas () {
+//    for(int i = 0; i < Venta.ventas.size(); i++) {
+//      System.out.println(simplificaFecha(Venta.ventas.get(i).getFecha()));
+//      System.out.println("---------------------------------");
+//      System.out.println(Venta.ventas.get(i).getCarrito());
+//      System.out.println("Gran total: "+Venta.ventas.get(i).getGTotal());
+//      System.out.println("*********************************");
+//    }
+//  }
   
   /**
    * Transforma la fecha a un formato simple
@@ -310,36 +310,36 @@ public class Inventario {
    * Devuelve las ventas que se realizaron en una fecha exacta
    * @param fecha String con el formato dd/MM/yyy de la fecha que se desea buscar
    */
-  public void ventasFechaExacta (String fecha) {
-    for(int i = 0; i < Venta.ventas.size(); i++) {
-      if (simplificaFecha(Venta.ventas.get(i).getFecha()).equals(fecha)) {
-        System.out.println(simplificaFecha(Venta.ventas.get(i).getFecha()));
-        System.out.println("---------------------------------");
-        System.out.println(Venta.ventas.get(i).getCarrito());
-        System.out.println("Gran total: "+Venta.ventas.get(i).getGTotal());
-        System.out.println("*********************************");
-      }
-      else {
-        System.out.println("No hubo ventas en esa fecha");
-      }
-    }
-  }
+//  public void ventasFechaExacta (String fecha) {
+//    for(int i = 0; i < Venta.ventas.size(); i++) {
+//      if (simplificaFecha(Venta.ventas.get(i).getFecha()).equals(fecha)) {
+//        System.out.println(simplificaFecha(Venta.ventas.get(i).getFecha()));
+//        System.out.println("---------------------------------");
+//        System.out.println(Venta.ventas.get(i).getCarrito());
+//        System.out.println("Gran total: "+Venta.ventas.get(i).getGTotal());
+//        System.out.println("*********************************");
+//      }
+//      else {
+//        System.out.println("No hubo ventas en esa fecha");
+//      }
+//    }
+//  }
   
   /**
    * Permite filtrar las ventas por mes 
    * @param fecha el número del mes que se desea filtrar 
    */
-  public void ventasMes (String fecha) {
-    fecha = "/"+fecha+"/";
-    for (int i = 0; i < Venta.ventas.size(); i++) {
-      if(simplificaFecha(Venta.ventas.get(i).getFecha()).contains(fecha)) {
-        System.out.println(simplificaFecha(Venta.ventas.get(i).getFecha()));
-        System.out.println("---------------------------------");
-        System.out.println(Venta.ventas.get(i).getCarrito());
-        System.out.println("Gran total: "+Venta.ventas.get(i).getGTotal());
-        System.out.println("*********************************");
-      }
-    }
-  }
+//  public void ventasMes (String fecha) {
+//    fecha = "/"+fecha+"/";
+//    for (int i = 0; i < Venta.ventas.size(); i++) {
+//      if(simplificaFecha(Venta.ventas.get(i).getFecha()).contains(fecha)) {
+//        System.out.println(simplificaFecha(Venta.ventas.get(i).getFecha()));
+//        System.out.println("---------------------------------");
+//        System.out.println(Venta.ventas.get(i).getCarrito());
+//        System.out.println("Gran total: "+Venta.ventas.get(i).getGTotal());
+//        System.out.println("*********************************");
+//      }
+//    }
+//  }
 }
 

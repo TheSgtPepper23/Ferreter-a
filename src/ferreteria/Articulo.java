@@ -81,4 +81,8 @@ public class Articulo implements java.io.Serializable {
   public String getTipoUnidad () {
     return tipoUnidad;
   }
+  
+  public void ventaUno () {
+    this.existencia = existencia-1;
+  }
 }

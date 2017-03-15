@@ -74,7 +74,7 @@ public class Menu {
         inv.eliminarArticulo(lect.leerString());
         break;
       case 5:
-        inv.mostrarVentas();
+        //inv.mostrarVentas();
         break;
       case 6:
         System.out.println("Escriba el nombre o la clave del proucto que desea buscar");
@@ -90,7 +90,7 @@ public class Menu {
         inv.mostrarArticulos();
         break;
       case 9:
-        inv.realizarVenta();
+        //inv.realizarVenta();
         break;
       case 10:
         System.out.println("El valor del inventario es de "+ inv.valorInventario());
@@ -98,12 +98,12 @@ public class Menu {
       case 11:
         lect.salto();
         System.out.println("Escriba la fecha en el formato dd/mm/aa utilizando solo números");
-        inv.ventasFechaExacta(lect.leerString());
+        //inv.ventasFechaExacta(lect.leerString());
         break;
       case 12:
         lect.salto();
         System.out.println("Escriba el número del mes que desea buscar, utilice dos números");
-        inv.ventasMes(lect.leerString());
+        //inv.ventasMes(lect.leerString());
         break;
       case 13:
         file.escribirInventario();

@@ -7,6 +7,8 @@ package ferreteria;
 
 import java.util.ArrayList;
 import java.util.Date;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -16,12 +18,13 @@ public class Venta implements java.io.Serializable {
   private Date fecha;
   private double gTotal;
   public static ArrayList<Venta> ventas = new ArrayList<>();
-  public static ArrayList<Articulo> carrito = new ArrayList<>();
+  ObservableList<Articulo> carrito = FXCollections.observableArrayList();
   /**
    * Constructor por de la clase Venta 
    */
   public Venta () {
     this.fecha = new Date();
+    this.carrito = carrito;
   }
   
   public double getGTotal () {
@@ -36,11 +39,11 @@ public class Venta implements java.io.Serializable {
     return fecha;
   }
   
-  public ArrayList getCarrito () {
-    return carrito;
+  public void addToCarrito (Articulo articulo) {
+    carrito.add(articulo);
   }
   
-  public void setCarrito (ArrayList carrito) {
-    this.carrito = carrito;
+  public ObservableList getCarrito () {
+    return this.carrito;
   }
 }
