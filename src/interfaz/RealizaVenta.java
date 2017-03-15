@@ -15,11 +15,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -43,6 +47,8 @@ public class RealizaVenta extends Application {
   private Button bMas, bCompra, bRegreso;
   private ListView<Articulo> listaCompra;
   private Double sub, tot;
+  private Spinner <Integer> cantidad;
+  private SpinnerValueFactory<Integer> valueFactory;
 
   public RealizaVenta() {
     this.tot = 0.0;
@@ -64,10 +70,14 @@ public class RealizaVenta extends Application {
     venta = new Venta();
     subtotal = new Label("Subtotal: 0.0");
     total = new Label("Total: 0.0");
+    archivo = new Archivo();
+    cantidad = new Spinner<>();
+    valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, 1);
     
     hbox.setSpacing(5);
+    cantidad.setValueFactory(valueFactory);
     hbox.setPadding(new Insets(10, 10, 10, 10));
-    hbox.getChildren().addAll(cbArticulos, bMas);
+    hbox.getChildren().addAll(cbArticulos, cantidad, bMas);
     hbox2.setSpacing(5);
     hbox2.setPadding(new Insets(10, 10, 10, 10));
     hbox2.getChildren().addAll(bRegreso, bCompra);
@@ -94,8 +104,8 @@ public class RealizaVenta extends Application {
           protected void updateItem(Articulo item, boolean empty) {
             super.updateItem(item, empty); 
             if (item != null) {
-              setText("Nombre:"+item.getNombre().toLowerCase()+" Unidad: "+
-                      item.getTipoUnidad().toLowerCase()+" Precio: "+ item.getPrecioCompra()*1.50);
+              setText("NOMBRE:"+item.getNombre().toLowerCase()+" UNIDAD: "+
+                      item.getTipoUnidad().toLowerCase()+" PRECIO: "+ item.getPrecioCompra()*1.50);
             }
           }
         };
@@ -108,13 +118,25 @@ public class RealizaVenta extends Application {
       public void handle(ActionEvent t) {
         subtotal.setText("Subtotal: ");
         total.setText("Total: ");
-        venta.addToCarrito(cbArticulos.getSelectionModel().getSelectedItem());
-        cbArticulos.getSelectionModel().getSelectedItem().ventaUno();
-        listaCompra.setItems(venta.getCarrito());
-        sub += cbArticulos.getSelectionModel().getSelectedItem().getPrecioCompra()*1.50;
-        tot = sub*1.16;
-        subtotal.setText("Subtotal: "+sub);
-        total.setText("Total: "+tot);
+        if(cbArticulos.getSelectionModel().getSelectedItem().getExistencia()>=cantidad.getValue()) { 
+          for (int i = 0; i < cantidad.getValue(); i++) {
+            venta.addToCarrito(cbArticulos.getSelectionModel().getSelectedItem());
+          }
+          cbArticulos.getSelectionModel().getSelectedItem().venta(cantidad.getValue());
+          listaCompra.setItems(venta.getCarrito());
+          sub += cbArticulos.getSelectionModel().getSelectedItem().getPrecioCompra()*1.50*
+                  cantidad.getValue();
+          tot = sub*1.16;
+          subtotal.setText("Subtotal: "+sub);
+          total.setText("Total: "+tot);
+        }
+        else {
+          Alert noHay = new Alert(AlertType.ERROR);
+          noHay.setTitle("Error");
+          noHay.setHeaderText("Lo sentimos");
+          noHay.setContentText("Las existencias de este artículo se han agotado");
+          noHay.showAndWait();
+        }
       }
     });
     
@@ -131,8 +153,14 @@ public class RealizaVenta extends Application {
       public void handle(ActionEvent t) {
         venta.setGTotal(tot);
         Venta.ventas.add(venta);
-        archivo.escribirInventario();
         archivo.escribirVentas();
+        archivo.escribirInventario();
+        Alert confirmacion = new Alert(AlertType.INFORMATION);
+        confirmacion.setTitle("Confirmación");
+        confirmacion.setHeaderText("Venta realizada con éxito");
+        confirmacion.showAndWait();
+        MenuPrincipal menu = new MenuPrincipal(Utilidades.getAdmin());
+        menu.start(primaryStage);
       }
     });
     
@@ -141,12 +169,4 @@ public class RealizaVenta extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
   }
-
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    launch(args);
-  }
-  
 }

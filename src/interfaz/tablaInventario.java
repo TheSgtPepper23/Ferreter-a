@@ -57,14 +57,16 @@ public class tablaInventario extends Application {
     vbox = new VBox();
     hBotones = new HBox();
     tabla =  new TableView<>();
+    archivo = new Archivo();
     cClave = new TableColumn("Clave");
     cNombre =  new TableColumn("Nombre");
     cDescripcion = new TableColumn("Descripción");
     cPrecio = new TableColumn("Precio");
     cCantidad = new TableColumn("Existencia");
     cUnidad = new TableColumn("Unidad");
-    final ObservableList<Articulo> oArticulos = FXCollections.observableArrayList(Articulo.articulos);
     
+    archivo.leerInventario();
+    final ObservableList<Articulo> oArticulos = FXCollections.observableArrayList(Articulo.articulos);
     cClave.setCellValueFactory(new PropertyValueFactory<>("clave"));
     cNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
     cDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
@@ -79,6 +81,8 @@ public class tablaInventario extends Application {
     vbox.setSpacing(5);
     vbox.setPadding(new Insets(10, 10, 10, 10));
     vbox.getChildren().addAll(tabla, hBotones);
+    Articulo.articulos.clear();
+    
  
     bRegreso.setOnAction(new EventHandler<ActionEvent>() {
       @Override

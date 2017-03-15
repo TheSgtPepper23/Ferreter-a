@@ -79,6 +79,7 @@ public class MenuPrincipal extends Application {
     agregar.setTooltip(lAgregar);
     comprar.setGraphic(new ImageView(iComprar));
     comprar.setTooltip(lComprar);
+    comprar.setDisable(true);
     editar.setTooltip(lEditar);
     inventario.setGraphic(new ImageView(iInventario));
     inventario.setTooltip(lInventario);

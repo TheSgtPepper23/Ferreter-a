@@ -82,7 +82,7 @@ public class Articulo implements java.io.Serializable {
     return tipoUnidad;
   }
   
-  public void ventaUno () {
-    this.existencia = existencia-1;
+  public void venta (int cantidad) {
+    this.existencia = existencia-cantidad;
   }
 }
