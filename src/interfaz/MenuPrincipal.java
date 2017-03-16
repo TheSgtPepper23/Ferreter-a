@@ -108,7 +108,7 @@ public class MenuPrincipal extends Application {
     inventario.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent t) {
-        tablaInventario invent = new tablaInventario(Utilidades.getAdmin());
+        TablaInventario invent = new TablaInventario(Utilidades.getAdmin());
         invent.start(primaryStage);
       }
     });
@@ -149,6 +149,13 @@ public class MenuPrincipal extends Application {
       }
     });
     
+    ventas.setOnAction(new EventHandler<ActionEvent>() {
+      @Override
+      public void handle(ActionEvent t) {
+        MostrarVentas muestraVentas = new MostrarVentas();
+        muestraVentas.start(primaryStage);
+      }
+    });
     
     Scene escena = new Scene(grid, 300, 175);
     primaryStage.setScene(escena);

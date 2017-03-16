@@ -75,6 +75,7 @@ public class Login extends Application {
     grid.add(nuevo, 0, 4);
     archivo.leerUsuario();
     archivo.leerInventario();
+    archivo.leerVentas();
       
     nuevo.setOnAction((ActionEvent t) -> {
       AgregarUsuario anadir = new AgregarUsuario();

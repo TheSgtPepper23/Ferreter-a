@@ -127,8 +127,8 @@ public class RealizaVenta extends Application {
           sub += cbArticulos.getSelectionModel().getSelectedItem().getPrecioCompra()*1.50*
                   cantidad.getValue();
           tot = sub*1.16;
-          subtotal.setText("Subtotal: "+sub);
-          total.setText("Total: "+tot);
+          subtotal.setText("Subtotal: "+Utilidades.redondearDouble(sub));
+          total.setText("Total: "+Utilidades.redondearDouble(tot));
         }
         else {
           Alert noHay = new Alert(AlertType.ERROR);

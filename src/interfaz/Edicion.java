@@ -92,7 +92,7 @@ public class Edicion extends Application {
         articulo.setExistencia(Utilidades.stringToInt(tCantidad.getText()));
         articulo.setTipoUnidad(cUnidad.getSelectionModel().getSelectedItem().toString().toUpperCase());
         archivo.escribirInventario();
-        tablaInventario invent = new tablaInventario(Utilidades.getAdmin());
+        TablaInventario invent = new TablaInventario(Utilidades.getAdmin());
         invent.start(primaryStage);
       }
     });
@@ -100,7 +100,7 @@ public class Edicion extends Application {
     bregresar.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent t) {
-        tablaInventario invent = new tablaInventario(Utilidades.getAdmin());
+        TablaInventario invent = new TablaInventario(Utilidades.getAdmin());
         invent.start(primaryStage);
       }
     });

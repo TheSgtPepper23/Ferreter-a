@@ -33,7 +33,7 @@ import recursos.Utilidades;
  *
  * @author andres
  */
-public class tablaInventario extends Application {
+public class TablaInventario extends Application {
    private Archivo archivo;
    private VBox vbox;
    private HBox hBotones;
@@ -44,7 +44,7 @@ public class tablaInventario extends Application {
    private Button bRegreso, bEditar, bEliminar;
    private boolean admin;
    
-   public tablaInventario (boolean admin) {
+   public TablaInventario (boolean admin) {
      this.admin = admin;
    }
    
@@ -81,7 +81,6 @@ public class tablaInventario extends Application {
     vbox.setSpacing(5);
     vbox.setPadding(new Insets(10, 10, 10, 10));
     vbox.getChildren().addAll(tabla, hBotones);
-    Articulo.articulos.clear();
     
  
     bRegreso.setOnAction(new EventHandler<ActionEvent>() {
@@ -117,7 +116,7 @@ public class tablaInventario extends Application {
           try {
             this.finalize();
           } catch (Throwable ex) {
-            Logger.getLogger(tablaInventario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TablaInventario.class.getName()).log(Level.SEVERE, null, ex);
           }
         }
       }
@@ -131,13 +130,5 @@ public class tablaInventario extends Application {
     Scene scene = new Scene(vbox, 600, 300);
     primaryStage.setScene(scene);
     primaryStage.show();
-  }
-
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    launch(args);
-  }
-  
+  }  
 }
