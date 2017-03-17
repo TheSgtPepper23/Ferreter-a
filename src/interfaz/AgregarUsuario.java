@@ -29,6 +29,8 @@ import usuarioSistema.Usuario;
 /**
  *
  * @author andres
+ * @version 1.0
+ * Muestra un cuestinario para añadoir nuevos usuarios al sistema
  */
 public class AgregarUsuario extends Application {
   private Archivo archivo;

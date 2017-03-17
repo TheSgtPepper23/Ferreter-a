@@ -5,9 +5,7 @@
  */
 package interfaz;
 
-import ferreteria.Articulo;
 import ferreteria.Venta;
-import java.util.Date;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -27,6 +25,8 @@ import recursos.Utilidades;
 /**
  *
  * @author andres
+ * @version 1.0
+ * Muestra todas las ventas que se han realizado con la fecha y el total
  */
 public class MostrarVentas extends Application {
   private VBox vbox;
@@ -80,12 +80,4 @@ public class MostrarVentas extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
   }
-
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    launch(args);
-  }
-  
 }

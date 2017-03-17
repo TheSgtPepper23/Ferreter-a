@@ -5,28 +5,25 @@
  */
 package interfaz;
 
-import accesoDatos.Archivo;
 import ferreteria.Articulo;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import recursos.Utilidades;
 
 /**
  *
  * @author andres
+ * @version 1.0
+ * Muestra los detalles de un artículo
  */
 public class MostrarUno extends Application {
   private Articulo articulo;
@@ -96,12 +93,4 @@ public class MostrarUno extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
   }
-
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    launch(args);
-  }
-  
 }

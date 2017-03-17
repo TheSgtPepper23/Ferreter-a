@@ -18,7 +18,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -26,6 +25,8 @@ import javafx.util.Callback;
 /**
  *
  * @author andres
+ * @version 1.0
+ * Muestra los detalles de una venta en específico
  */
 public class VentaDetallada extends Application {
   private Label subtotal, total, date;
@@ -86,12 +87,4 @@ public class VentaDetallada extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
   }
-
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    launch(args);
-  }
-  
 }

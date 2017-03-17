@@ -27,6 +27,8 @@ import recursos.Utilidades;
 /**
  *
  * @author andres
+ * @version 1.0
+ * Es la ventana donde se muestran los botones hacia todas las ventanas
  */
 public class MenuPrincipal extends Application {
   private GridPane grid;

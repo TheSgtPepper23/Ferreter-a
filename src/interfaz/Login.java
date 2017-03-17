@@ -6,8 +6,6 @@
 package interfaz;
 
 import accesoDatos.Archivo;
-import ferreteria.Articulo;
-import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
@@ -29,6 +27,7 @@ import usuarioSistema.Usuario;
  *
  * @author andres
  * @version 1.0
+ * Despliega un cuestinario donde hay que colocar los datos de inicio de sesión
  */
 public class Login extends Application {
     

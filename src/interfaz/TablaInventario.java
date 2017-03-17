@@ -32,6 +32,9 @@ import recursos.Utilidades;
 /**
  *
  * @author andres
+ * @version 1.0
+ * Muestra una tabla en donde se encuentran todos los objetos que hay en el inventario, incluyendo 
+ * sus eistencias
  */
 public class TablaInventario extends Application {
    private Archivo archivo;

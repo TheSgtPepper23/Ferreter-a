@@ -27,6 +27,8 @@ import recursos.Utilidades;
 /**
  *
  * @author andres
+ * @version 1.0
+ * Ventana que muestra una interfaz para agregar nuevos artículos al inventario
  */
 public class AgregarArticulo extends Application {
   

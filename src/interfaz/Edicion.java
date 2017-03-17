@@ -110,12 +110,4 @@ public class Edicion extends Application {
     primaryStage.setScene(scene);
     primaryStage.show();
   }
-
-  /**
-   * @param args the command line arguments
-   */
-  public static void main(String[] args) {
-    launch(args);
-  }
-  
 }
